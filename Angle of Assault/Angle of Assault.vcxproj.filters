@@ -21,9 +21,15 @@
     <ClCompile Include="Mainfunc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Basetexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mainfunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Basetexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
