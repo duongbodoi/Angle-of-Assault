@@ -35,3 +35,7 @@ void Ltexture::free() {
 		mrect.h = 0;
 	}
 }
+void Ltexture::render360(SDL_Renderer* des, int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+	set_rect( x, y);
+	SDL_RenderCopyEx(des, mTexture, clip, &mrect, angle, center, flip);
+}

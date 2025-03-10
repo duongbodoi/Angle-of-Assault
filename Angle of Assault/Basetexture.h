@@ -9,6 +9,7 @@ public:
 	SDL_Texture* get_texture() const { return mTexture; }
 	bool loadfromfile(std::string file, SDL_Renderer* screen);
 	void render(SDL_Renderer* des, const SDL_Rect* clip = NULL);
+	void render360(SDL_Renderer*des,int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip);
 	void free();
 protected:
 	SDL_Texture* mTexture;
