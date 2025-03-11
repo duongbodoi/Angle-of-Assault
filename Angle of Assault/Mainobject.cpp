@@ -69,9 +69,10 @@ void mObject::show(SDL_Renderer* des) {
 	if (status == walk_l) {
 		load_img("img/moveL.png", des);
 	}
-	//
-	
-	//
+	else if (status == reload_ or status == shot_) {
+		load_img("img/shot_reload.png", des);
+
+	}
 	else if (status == walk_r) {
 		load_img("img/moveR.png", des);
 	}
@@ -82,10 +83,18 @@ void mObject::show(SDL_Renderer* des) {
 			frame = 16;
 		}
 	}
-	//
-	
-
-	//
+	else if (input_type.reload == 1) {
+		frame++;
+		if (frame / 16 >= 1) {
+			frame = 16;
+		}
+	}
+	else if (input_type.shot == 1) {
+		frame += 3;
+		if (frame / 16 >= 4) {
+			input_type.shot = 0;
+		}
+	}
 	else {
 		frame = 15;
 	}
@@ -120,15 +129,17 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 
 			break;
 		}
-		//
-		
-
-		//
+		case SDLK_SPACE:
+		{
+			status = reload_;
+			input_type.reload = 1;
+			break;
+		}
 		default:
 			break;
 		}
 	}
-	else if (e.type = SDL_KEYUP and e.key.repeat == 0) {
+	else if (e.type == SDL_KEYUP and e.key.repeat == 0) {
 		switch (e.key.keysym.sym)
 		{
 		case SDLK_RIGHT:
@@ -148,11 +159,15 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 			break;
 
 		}
-		//
-		  
+		case SDLK_SPACE:
+		{
 
+			status = shot_;
+			input_type.reload = 0;
+			input_type.shot = 1;
+			break;
 
-		//
+		}
 		default:
 			break;
 		}

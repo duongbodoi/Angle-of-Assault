@@ -1,6 +1,7 @@
 #include"Mainfunc.h"
 #include"Basetexture.h"
 #include"Mainobject.h"
+#include"ThrowManager.h"
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -45,7 +46,10 @@ int main(int argv, char* argc[]) {
 	mObject naruto;
 	naruto.load_img("img/moveR.png", renderer);
 	naruto.set_clip();
-	//
+	//rasengan
+	throw_move rasengan;
+	rasengan.load_img("img/rasengan.png", renderer);
+	rasengan.set_clip();
 	bool running = true;
 	SDL_Event e;
 	while (running) {
@@ -53,21 +57,24 @@ int main(int argv, char* argc[]) {
 			if (e.type == SDL_QUIT) {
 					running = false;
 			}
-			else if (e.type == SDL_MOUSEBUTTONDOWN) {
+			else if (e.type == SDL_MOUSEBUTTONDOWN) { // cai nay giup ho tro cho ra vi tri toa do x,y tren man hinh window de de dang render ra man hinh
 					int x, y;
 					SDL_GetMouseState(&x, &y);
 					printf("Mouse Clicked at: (%d, %d)\n", x, y);
 			}
-			naruto.Handle_event(e, renderer);
 
+			naruto.Handle_event(e, renderer);
+			rasengan.Handle_event(e, renderer);
 
 
 				
 		}
 		naruto.move();
+		rasengan.arrow_shot(naruto.get_rect());
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 		naruto.show(renderer);
+		rasengan.show(renderer);
 		SDL_RenderPresent(renderer);
 		
 		
