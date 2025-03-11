@@ -136,12 +136,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mainfunc.cpp" />
     <ClCompile Include="Mainobject.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="ThrowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basetexture.h" />
     <ClInclude Include="Mainfunc.h" />
     <ClInclude Include="Mainobject.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="ThrowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

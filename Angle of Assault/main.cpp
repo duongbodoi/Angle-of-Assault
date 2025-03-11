@@ -2,6 +2,7 @@
 #include"Basetexture.h"
 #include"Mainobject.h"
 #include"ThrowManager.h"
+#include"map.h"
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -50,6 +51,11 @@ int main(int argv, char* argc[]) {
 	throw_move rasengan;
 	rasengan.load_img("img/rasengan.png", renderer);
 	rasengan.set_clip();
+	//map
+	GameMap game_map;
+	game_map.loadmap("map.txt");
+	game_map.load_tile(renderer);
+	//
 	bool running = true;
 	SDL_Event e;
 	while (running) {
@@ -71,8 +77,9 @@ int main(int argv, char* argc[]) {
 		}
 		naruto.move();
 		rasengan.arrow_shot(naruto.get_rect());
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
+		game_map.draw_map(renderer);
 		naruto.show(renderer);
 		rasengan.show(renderer);
 		SDL_RenderPresent(renderer);

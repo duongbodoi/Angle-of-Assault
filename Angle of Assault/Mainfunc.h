@@ -28,3 +28,17 @@ typedef struct Input
 	int reload;
 	int shot;
 };
+// map
+#define TILE_SIZE 64;
+const int MAX_MAP_X = 50;
+const int MAX_MAP_Y = 30;
+typedef struct Map {
+	int start_x; // kich thuoc thuc trong map to
+	int start_y;
+
+	int max_x;
+	int max_y;
+
+	std::string tile[MAX_MAP_Y][MAX_MAP_X];
+	char* filename;
+};

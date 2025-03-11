@@ -177,9 +177,8 @@ void mObject::move() {
 	vel_x = 0;
 	if (input_type.left == 1) vel_x -= v;
 	else if (input_type.right == 1) vel_x += v;
-	//
 	x_pos += vel_x;
 	if (x_pos >= SCREEN_WIDTH) x_pos = 0;
-	//if (x_pos <= 0) x_pos -= vel_x;
+	
 }
 
