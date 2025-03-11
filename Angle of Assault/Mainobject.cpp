@@ -102,18 +102,22 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 		{
 		case SDLK_RIGHT:
 		{
-			vel_x += v;
+			
 			status = walk_r;
 			input_type.right = 1;
-
+			input_type.left = 0;
 			break;
 		}
 		case SDLK_LEFT:
 		{
+			
+			
+				
+				status = walk_l;
+				input_type.left = 1;
+				input_type.right = 0;
+			
 
-			vel_x -= v;
-			status = walk_l;
-			input_type.left = 1;
 			break;
 		}
 		//
@@ -130,7 +134,7 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 		case SDLK_RIGHT:
 		{
 			status = -1;
-			vel_x -= v;
+			
 			input_type.right = 0;
 			
 
@@ -139,7 +143,7 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 		case SDLK_LEFT:
 		{
 			status = -2;
-			vel_x += v;
+			
 			input_type.left = 0;
 			break;
 
@@ -155,6 +159,10 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 	}
 }
 void mObject::move() {
+	vel_x = 0;
+	if (input_type.left == 1) vel_x -= v;
+	else if (input_type.right == 1) vel_x += v;
+	//
 	x_pos += vel_x;
 	if (x_pos >= SCREEN_WIDTH) x_pos = 0;
 	//if (x_pos <= 0) x_pos -= vel_x;
