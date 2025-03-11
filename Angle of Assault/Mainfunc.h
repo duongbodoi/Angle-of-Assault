@@ -17,4 +17,14 @@ static SDL_Event e;
 // Screen
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
-//
+// move
+typedef struct Input
+{
+	int left;
+	int right;
+	int up;
+	int down;
+	int jumb;
+	int reload;
+	int shot;
+};

@@ -135,10 +135,12 @@
     <ClCompile Include="Basetexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mainfunc.cpp" />
+    <ClCompile Include="Mainobject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basetexture.h" />
     <ClInclude Include="Mainfunc.h" />
+    <ClInclude Include="Mainobject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
