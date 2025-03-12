@@ -25,6 +25,10 @@ bool Ltexture::loadfromfile(string file, SDL_Renderer* screen) {
 }
 void Ltexture::render(SDL_Renderer* des, const SDL_Rect* clip) {
 	SDL_Rect offset = { mrect.x,mrect.y,mrect.w,mrect.h };
+	if (clip != NULL) {
+		offset.w = clip->w;
+		offset.h = clip->h;
+	}
 	SDL_RenderCopy(des, mTexture, clip, &offset);
 }
 void Ltexture::free() {
