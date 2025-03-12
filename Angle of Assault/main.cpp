@@ -55,6 +55,9 @@ int main(int argv, char* argc[]) {
 	GameMap game_map;
 	game_map.loadmap("map.txt");
 	game_map.load_tile(renderer);
+	//background
+	Ltexture background;
+	background.loadfromfile("img/backgr.png", renderer);
 	//
 	bool running = true;
 	SDL_Event e;
@@ -75,11 +78,17 @@ int main(int argv, char* argc[]) {
 
 				
 		}
+		//move
 		Map mapdata = game_map.getmap();
 		naruto.move(mapdata);
 		rasengan.arrow_shot(naruto.get_rect());
+		//Render window
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
+		//Render background
+		SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+		background.render(renderer, &bigmap);
+		//Render object
 		game_map.setmap(mapdata);
 		game_map.draw_map(renderer);
 		naruto.setmap_xy(mapdata.start_x, mapdata.start_y);

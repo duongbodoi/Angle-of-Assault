@@ -4,6 +4,7 @@ throw_move::throw_move() {
 	vel_y = 0;
 	x_pos = 0;
 	y_pos = 300;
+	
 }
 throw_move::~throw_move() {
 

@@ -17,7 +17,7 @@ public:
 	int v0 = 1;
 	int phi = 30;
 	double time = 0;
-	double x0, y0;
+	double x0=0, y0=0;
 private:
 	double vel_x, vel_y;
 	double x_pos, y_pos;
