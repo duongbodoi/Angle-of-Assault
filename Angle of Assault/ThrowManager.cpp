@@ -40,9 +40,9 @@ void throw_move::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 		}
 	}
 }
-void throw_move::arrow_shot(SDL_Rect archer_rect) {
-	x0 = archer_rect.x + 5;
-	y0 = archer_rect.y - 20;
+void throw_move::arrow_shot(double x,double y, Map& mapdata) {
+	x0 = x + 5;
+	y0 = y - 20;
 	double radian = phi * PI / 180;
 	if (input_type.reload == 1) {
 		v0 += 1;
@@ -62,13 +62,24 @@ void throw_move::arrow_shot(SDL_Rect archer_rect) {
 		y_pos = y0 - (v0 * sin(radian) * time - 0.5 * 9.8 * time * time);
 
 	}
+	Ghimmap(mapdata);
+}
+void throw_move::Ghimmap(Map& mapdata) {
+	mapdata.start_x = x_pos - SCREEN_WIDTH / 2;
+	if (mapdata.start_x < 0) mapdata.start_x = 0;
+	else if (mapdata.start_x + SCREEN_WIDTH >= mapdata.max_x) mapdata.start_x = mapdata.max_x - SCREEN_WIDTH;
+	mapdata.start_y = y_pos - SCREEN_HEIGHT / 2;
+
+	if (mapdata.start_y < 0) mapdata.start_y = 0;
+	else if (mapdata.start_y + SCREEN_HEIGHT >= mapdata.max_y) mapdata.start_y = mapdata.max_y - SCREEN_HEIGHT;
+
 }
 void throw_move::show(SDL_Renderer* des) {
 	if (input_type.shot == 1) {
 		frame++;
 		if (frame / 4 >= 2) frame = 0;
-		mrect.x = x_pos;
-		mrect.y = y_pos;
+		mrect.x = x_pos-map_x_;
+		mrect.y = y_pos-map_y_;
 		SDL_Rect* current_clip = &frame_clip[frame / 4];
 		SDL_Rect offset = { mrect.x,mrect.y,width_frame,heightframe };
 		SDL_RenderCopy(des, mTexture, current_clip, &offset);
@@ -76,13 +87,13 @@ void throw_move::show(SDL_Renderer* des) {
 	if (input_type.reload == 1) {
 		frame++;
 		if (frame / 4 >= 2) frame = 0;
-		mrect.x = x_pos;
-		mrect.y = y_pos;
+		mrect.x = x_pos-map_x_;
+		mrect.y = y_pos-map_y_;
 		SDL_Rect* current_clip = &frame_clip[frame / 4];
 		SDL_Rect offset = { mrect.x,mrect.y,width_frame,heightframe };
 		SDL_RenderCopy(des, mTexture, current_clip, &offset);
 	}
-
+	
 
 }
 

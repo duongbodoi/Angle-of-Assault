@@ -19,6 +19,8 @@ public:
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
 	void Ghimmap(Map& mapdata);
 	void checkmap(Map& mapdata);
+	int getx_pos() { return x_pos; };
+	int gety_pos() { return y_pos; };
 	const int v = 2;
 
 private:
