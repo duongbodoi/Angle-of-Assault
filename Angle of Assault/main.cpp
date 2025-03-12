@@ -75,11 +75,14 @@ int main(int argv, char* argc[]) {
 
 				
 		}
-		naruto.move();
+		Map mapdata = game_map.getmap();
+		naruto.move(mapdata);
 		rasengan.arrow_shot(naruto.get_rect());
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
+		game_map.setmap(mapdata);
 		game_map.draw_map(renderer);
+		naruto.setmap_xy(mapdata.start_x, mapdata.start_y);
 		naruto.show(renderer);
 		rasengan.show(renderer);
 		SDL_RenderPresent(renderer);

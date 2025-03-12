@@ -14,12 +14,13 @@ void GameMap::loadmap(string path) {
             string val = game_map_.tile[i][j];
             if (val != "0") {
                 nametilemat.insert(val);
-                if (j > game_map_.max_x) {
-                    game_map_.max_x = j;
-                }
-                if (i > game_map_.max_y) {
-                    game_map_.max_y = i;
-                }
+                
+            }
+            if (j > game_map_.max_x) {
+                game_map_.max_x = j;
+            }
+            if (i > game_map_.max_y) {
+                game_map_.max_y = i;
             }
         }
     }
