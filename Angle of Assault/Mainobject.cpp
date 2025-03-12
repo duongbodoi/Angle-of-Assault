@@ -2,7 +2,7 @@
 mObject::mObject() {
 	vel_x = 0;
 	vel_y = 0;
-	x_pos = 15;
+	x_pos = 100;
 	y_pos = 0;
 	frame = 0;
 	width_frame = 0;
@@ -179,8 +179,7 @@ void mObject::move(Map& mapdata) {
 	if (vel_y >= 10) vel_y = 10;
 	if (input_type.left == 1) vel_x -= v;
 	else if (input_type.right == 1) vel_x += v;
-	x_pos += vel_x;
-	y_pos += vel_y;
+	checkmap(mapdata);
 	Ghimmap(mapdata);
 }
 void mObject::Ghimmap(Map& mapdata) {
@@ -193,4 +192,57 @@ void mObject::Ghimmap(Map& mapdata) {
 	else if (mapdata.start_y + SCREEN_HEIGHT >= mapdata.max_y) mapdata.start_y = mapdata.max_y - SCREEN_HEIGHT;
 
 }
+void mObject::checkmap(Map& mapdata) {
+	int x1 = 0;
+	int x2 = 0;
 
+	int y1 = 0;
+	int y2 = 0;
+
+	//
+	int h_min = heightframe < 64 ? heightframe : 64;
+	x1 = (x_pos + vel_x) / 64;
+	x2 = (x_pos + vel_x + width_frame - 1) / 64;
+
+	y1 = y_pos / 64;
+	y2 = (y_pos + h_min - 1) / 64;
+
+	if (x1 >= 0 and x2 < MAX_MAP_X and y1 >= 0 and y2 < MAX_MAP_Y) {
+		if (vel_x > 0) {
+			if (mapdata.tile[y1][x2] != "0" or mapdata.tile[y2][x2] != "0") {
+				x_pos = x2 * 64;
+				x_pos -= width_frame + 1;
+				vel_x = 0;
+			}
+		}
+		else {
+			if (mapdata.tile[y1][x1] != "0" or mapdata.tile[y2][x1] != "0") {
+				x_pos = (x1 + 1) * 64;
+				vel_x = 0;
+			}
+		}
+
+	}
+
+	//
+	int w_min = width_frame < 64 ? width_frame : 64;
+	x1 = (x_pos + vel_x) / 64;
+	x2 = (x_pos + w_min) / 64;
+
+	y1 = (y_pos + vel_y) / 64;
+	y2 = (y_pos + vel_y + heightframe - 1) / 64;
+	if (x1 >= 0 and x2 < MAX_MAP_X and y1 >= 0 and y2 < MAX_MAP_Y) {
+		if (vel_y > 0) {
+			if (mapdata.tile[y2][x1] != "0" or mapdata.tile[y2][x2] != "0") {
+				y_pos = y2 * 64;
+				y_pos -= heightframe + 1;
+				vel_y = 0;
+			}
+		}
+
+	}
+	x_pos += vel_x;
+	y_pos += vel_y;
+
+
+}
