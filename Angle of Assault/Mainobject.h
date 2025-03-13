@@ -21,6 +21,7 @@ public:
 	void checkmap(Map& mapdata);
 	int getx_pos() { return x_pos; };
 	int gety_pos() { return y_pos; };
+	Input get_input() { return input_type; };
 	const int v = 2;
 
 private:

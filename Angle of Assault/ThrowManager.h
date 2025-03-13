@@ -16,6 +16,7 @@ public:
 	void set_clip();
 	void Ghimmap(Map& mapdata);
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
+	Input get_input() { return input_type; };
 	int v0 = 1;
 	int phi = 30;
 	double time = 0;

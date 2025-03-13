@@ -80,20 +80,29 @@ int main(int argv, char* argc[]) {
 		}
 		//move
 		Map mapdata = game_map.getmap();
+		Map mapdata_shot = game_map.getmap();
+		naruto.setmap_xy(mapdata.start_x, mapdata.start_y);
 		naruto.move(mapdata);
-		rasengan.arrow_shot(naruto.getx_pos(), naruto.gety_pos(), mapdata);
+		rasengan.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
+		rasengan.arrow_shot(naruto.getx_pos(), naruto.gety_pos(), mapdata_shot);
 		//Render window
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 		//Render background
-		SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
-		background.render(renderer, &bigmap);
+		if (naruto.get_input().shot == 0)
+		{
+			game_map.setmap(mapdata);
+			SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+			background.render(renderer, &bigmap);
+		}
+		if (rasengan.get_input().shot == 1)
+		{
+			game_map.setmap(mapdata_shot);
+			SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+			background.render(renderer, &bigmap);
+		}
 		//Render object
-		game_map.setmap(mapdata);
 		game_map.draw_map(renderer);
-		naruto.setmap_xy(mapdata.start_x, mapdata.start_y);
-		rasengan.setmap_xy(mapdata.start_x, mapdata.start_y);
-		
 		naruto.show(renderer);
 		rasengan.show(renderer);
 		SDL_RenderPresent(renderer);
