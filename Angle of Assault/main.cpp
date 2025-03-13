@@ -89,13 +89,13 @@ int main(int argv, char* argc[]) {
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 		//Render background
-		if (naruto.get_input().shot == 0)
+		if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
 		{
 			game_map.setmap(mapdata);
 			SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 			background.render(renderer, &bigmap);
 		}
-		if (rasengan.get_input().shot == 1)
+		if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
 		{
 			game_map.setmap(mapdata_shot);
 			SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };

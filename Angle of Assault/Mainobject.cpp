@@ -2,7 +2,7 @@
 mObject::mObject() {
 	vel_x = 0;
 	vel_y = 0;
-	x_pos = 100;
+	x_pos = 400;
 	y_pos = 0;
 	frame = 0;
 	width_frame = 0;
@@ -72,14 +72,12 @@ void mObject::set_clip() {
 	}
 }
 void mObject::show(SDL_Renderer* des) {
-	if (status == walk_l) {
-		load_img("img/moveL.png", des);
-	}
-	else if (status == reload_ or status == shot_) {
+	
+	if (status == reload_ or status == shot_) {
 		load_img("img/shot_reload.png", des);
 
 	}
-	else if (status == walk_r) {
+	else if (status == walk_r  ) {
 		load_img("img/moveR.png", des);
 	}
 

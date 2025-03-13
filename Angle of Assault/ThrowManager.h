@@ -15,6 +15,7 @@ public:
 	virtual bool load_img(std::string file, SDL_Renderer* renderer);
 	void set_clip();
 	void Ghimmap(Map& mapdata);
+	void checkmap(Map& mapdata);
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
 	Input get_input() { return input_type; };
 	int v0 = 1;
