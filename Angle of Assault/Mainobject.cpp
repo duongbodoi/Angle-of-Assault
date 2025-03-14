@@ -141,6 +141,11 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 			input_type.reload = 1;
 			break;
 		}
+		case SDLK_z:
+		{
+			input_type.jumb = 1;
+			break;
+		}
 		default:
 			break;
 		}
@@ -185,6 +190,11 @@ void mObject::move(Map& mapdata) {
 	if (vel_y >= 10) vel_y = 10;
 	if (input_type.left == 1) vel_x -= v;
 	else if (input_type.right == 1) vel_x += v;
+	if (input_type.jumb == 1)
+	{
+		vel_y = -30;
+		input_type.jumb = 0;
+	}
 	checkmap(mapdata);
 	Ghimmap(mapdata);
 }

@@ -112,6 +112,7 @@ int main(int argv, char* argc[]) {
 		x_onmap=2300;
 		y_onmap=600;
 		SDL_Rect rectA = rasengan.get_rect();
+		rectA.w /= 3;
 		if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
 		{
 			SDL_Rect rectB = { x_onmap - mapdata.start_x, y_onmap - mapdata.start_y, 100, 600 };

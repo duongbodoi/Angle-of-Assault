@@ -3,7 +3,7 @@ throw_move::throw_move() {
 	vel_x = 0;
 	vel_y = 0;
 	x_pos = 0;
-	y_pos = 300;
+	y_pos = 0;
 	
 }
 throw_move::~throw_move() {

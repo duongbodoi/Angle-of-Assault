@@ -23,7 +23,7 @@ public:
 	int gety_pos() { return y_pos; };
 	Input get_input() { return input_type; };
 	
-	const int v = 2;
+	const int v = 4;
 
 private:
 	double vel_x, vel_y;
