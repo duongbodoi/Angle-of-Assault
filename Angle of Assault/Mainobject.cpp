@@ -80,7 +80,9 @@ void mObject::show(SDL_Renderer* des) {
 	else if (status == walk_r  ) {
 		load_img("img/moveR.png", des);
 	}
-
+	else if (status == walk_l) {
+		load_img("img/moveL.png", des);
+	}
 	if (input_type.left == 1 or input_type.right == 1) {
 		frame++;
 		if (frame / 16 >= 8) {

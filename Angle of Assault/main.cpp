@@ -3,6 +3,9 @@
 #include"Mainobject.h"
 #include"ThrowManager.h"
 #include"map.h"
+double x_onmap;
+double y_onmap;
+
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -105,6 +108,25 @@ int main(int argv, char* argc[]) {
 		game_map.draw_map(renderer);
 		naruto.show(renderer);
 		rasengan.show(renderer);
+		// demo threat
+		x_onmap=2300;
+		y_onmap=600;
+		SDL_Rect rectA = rasengan.get_rect();
+		if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
+		{
+			SDL_Rect rectB = { x_onmap - mapdata.start_x, y_onmap - mapdata.start_y, 100, 600 };
+			SDL_RenderFillRect(renderer, &rectB);
+			if (SDL_HasIntersection(&rectA, &rectB)) rasengan.set_intput(0);
+
+		}
+		if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
+		{
+			SDL_Rect rectB = { x_onmap - mapdata_shot.start_x, y_onmap - mapdata_shot.start_y, 100, 600 };
+			SDL_RenderFillRect(renderer, &rectB);
+			if (SDL_HasIntersection(&rectA, &rectB)) rasengan.set_intput(0);
+
+		}
+		//
 		SDL_RenderPresent(renderer);
 		
 		

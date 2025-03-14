@@ -130,7 +130,7 @@ void throw_move::checkmap(Map& mapdata) {
 	}
 	
 	//
-	if (x_pos<0 or x_pos>mapdata.max_x or y_pos<0 or y_pos>mapdata.max_y) input_type.shot = 0;
+	if (x_pos<0 or x_pos>mapdata.max_x  or y_pos>mapdata.max_y) input_type.shot = 0;
 
 }
 void throw_move::show(SDL_Renderer* des) {

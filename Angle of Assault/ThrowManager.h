@@ -18,8 +18,9 @@ public:
 	void checkmap(Map& mapdata);
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
 	Input get_input() { return input_type; };
+	void set_intput(int x) { input_type.shot = x; };
 	int v0 = 1;
-	int phi = 30;
+	int phi = 60;
 	double time = 0;
 	double x0=0, y0=0;
 private:
