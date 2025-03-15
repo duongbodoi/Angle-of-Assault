@@ -3,9 +3,11 @@
 #include"Mainobject.h"
 #include"ThrowManager.h"
 #include"map.h"
+#include"object_bar.h"
 double x_onmap;
 double y_onmap;
-
+Ltexture angle;
+Ltexture arrow;
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -128,6 +130,14 @@ int main(int argv, char* argc[]) {
 
 		}
 		//
+		if (naruto.get_input().reload == 1) {
+
+			draw_powerbar(renderer, rasengan.v0, naruto.get_rect().x - 50, naruto.get_rect().y + 100);
+			
+		}
+		if (naruto.get_input().left != 1 and naruto.get_input().right != 1) {
+			draw_angle_control(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle, arrow);
+		}
 		SDL_RenderPresent(renderer);
 		
 		

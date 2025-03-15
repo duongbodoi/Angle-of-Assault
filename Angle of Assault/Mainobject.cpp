@@ -8,7 +8,7 @@ mObject::mObject() {
 	width_frame = 0;
 	heightframe = 0;
 	status = -1;
-	input_type.down = 0;
+	
 	input_type.reload = 0;
 	input_type.right = 0;
 	input_type.shot = 0;

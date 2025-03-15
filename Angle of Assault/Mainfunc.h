@@ -22,8 +22,8 @@ typedef struct Input
 {
 	int left;
 	int right;
-	int up;
-	int down;
+	int aim_up;
+	int aim_down;
 	int jumb;
 	int reload;
 	int shot;

@@ -11,7 +11,7 @@ throw_move::~throw_move() {
 }
 void throw_move::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 	if (e.type == SDL_KEYDOWN) {
-		if (e.key.repeat == 0 and e.key.keysym.sym == SDLK_SPACE) v0 = 50;
+		if (e.key.repeat == 0 and e.key.keysym.sym == SDLK_SPACE) v0 = 0;
 		switch (e.key.keysym.sym)
 		{
 		case SDLK_SPACE:
@@ -19,6 +19,20 @@ void throw_move::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 			input_type.reload = 1;
 			input_type.shot = 0;
 			break;
+		}
+		case SDLK_UP:
+		{
+			input_type.aim_up = 1;
+			input_type.aim_down = 0;
+			break;
+
+		}
+		case SDLK_DOWN:
+		{
+			input_type.aim_down = 1;
+			input_type.aim_up = 0;
+			break;
+
 		}
 		default:
 			break;
@@ -35,17 +49,36 @@ void throw_move::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 			break;
 
 		}
+		case SDLK_UP:
+		{
+			input_type.aim_up = 0;
+
+			break;
+
+		}
+		case SDLK_DOWN: 
+		{
+			input_type.aim_down = 0;
+
+			break;
+
+		}
+		
 		default:
 			break;
 		}
 	}
+	//
+	if (input_type.aim_down == 1) phi--;
+	if (input_type.aim_up == 1) phi++;
+
 }
 void throw_move::arrow_shot(double x,double y, Map& mapdata) {
 	x0 = x + 5;
 	y0 = y - 20;
 	double radian = phi * PI / 180;
 	if (input_type.reload == 1) {
-		v0 += 1;
+		v0 += 2;
 		if (v0 >= 200) v0 = 200;
 		time = 0;
 		x_pos = x0;
