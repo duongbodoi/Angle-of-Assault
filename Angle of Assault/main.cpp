@@ -4,6 +4,7 @@
 #include"ThrowManager.h"
 #include"map.h"
 #include"object_bar.h"
+#include"Timer.h";
 double x_onmap;
 double y_onmap;
 Ltexture angle;
@@ -17,6 +18,9 @@ bool Init() {
 	}
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 	window = SDL_CreateWindow("duongbodoi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	if (TTF_Init() == -1) {
+		cout << "TTF_Init failed: " << TTF_GetError() << endl;
+	}
 	if (window == NULL) {
 		check = false;
 		cout << "error window";
@@ -47,6 +51,9 @@ void close() {
 }
 
 int main(int argv, char* argc[]) {
+	Timer time;
+	Ltexture time_text;
+	//
 	if (!Init()) return -1;
 	// naruto
 	mObject naruto;
@@ -66,7 +73,10 @@ int main(int argv, char* argc[]) {
 	//
 	bool running = true;
 	SDL_Event e;
+	//
+	time.start();
 	while (running) {
+		
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 					running = false;
@@ -129,7 +139,7 @@ int main(int argv, char* argc[]) {
 			if (SDL_HasIntersection(&rectA, &rectB)) rasengan.set_intput(0);
 
 		}
-		//
+		// object_bar
 		if (naruto.get_input().reload == 1) {
 
 			draw_powerbar(renderer, rasengan.v0, naruto.get_rect().x - 50, naruto.get_rect().y + 100);
@@ -138,6 +148,17 @@ int main(int argv, char* argc[]) {
 		if (naruto.get_input().left != 1 and naruto.get_input().right != 1) {
 			draw_angle_control(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle, arrow);
 		}
+		// demo time
+		int real_time = time.get_tick()/1000;
+		stringstream text;
+		text.str("");
+		text << "Time : " << real_time<<" s";
+		SDL_Color color = { 255,15,0 };
+		time_text.loadfromtext(renderer,text.str(), color, "font.ttf");
+		time_text.set_rect(1060, 15);
+		time_text.render(renderer);
+		//
+		
 		SDL_RenderPresent(renderer);
 		
 		

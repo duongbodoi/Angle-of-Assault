@@ -24,6 +24,28 @@ bool Ltexture::loadfromfile(string file, SDL_Renderer* screen) {
 	mTexture = newtexture;
 	return mTexture != NULL;
 }
+bool Ltexture::loadfromtext(SDL_Renderer* screen,string text, SDL_Color color,string path_font) {
+	SDL_Texture* newtexture = NULL;
+	TTF_Font* gfont = TTF_OpenFont(path_font.c_str(), 30);
+	if (gfont == NULL) cout << "error font";
+	SDL_Surface* surfacetext = TTF_RenderText_Solid(gfont, text.c_str(), color);
+	if (surfacetext == NULL) {
+		cout << "error load surfacetext";
+	}
+	else {
+		newtexture = SDL_CreateTextureFromSurface(screen, surfacetext);
+		if (newtexture == NULL) {
+			cout << "error texture";
+		}
+		else {
+			mrect.w = surfacetext->w;
+			mrect.h = surfacetext->h;
+
+		}
+	}
+	mTexture = newtexture;
+	return mTexture != NULL;
+}
 void Ltexture::render(SDL_Renderer* des, const SDL_Rect* clip) {
 	SDL_Rect offset = { mrect.x,mrect.y,mrect.w,mrect.h };
 	if (clip != NULL) {
