@@ -11,6 +11,7 @@ bool Ltexture::loadfromfile(string file, SDL_Renderer* screen) {
 	SDL_Surface* loadedsurface = IMG_Load(file.c_str());
 	if (loadedsurface == NULL) cout << "error loadsurface";
 	else {
+		SDL_SetColorKey(loadedsurface, SDL_TRUE, SDL_MapRGB(loadedsurface->format, 125, 125, 125));
 		newtexture = SDL_CreateTextureFromSurface(screen, loadedsurface);
 
 		if (newtexture == NULL) cout << "error loadtexture";

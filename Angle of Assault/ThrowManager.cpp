@@ -71,7 +71,8 @@ void throw_move::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 	//
 	if (input_type.aim_down == 1) phi--;
 	if (input_type.aim_up == 1) phi++;
-
+	if (phi >= 90) phi = 90;
+	if (phi <= 0) phi = 0;
 }
 void throw_move::arrow_shot(double x,double y, Map& mapdata) {
 	x0 = x + 5;
