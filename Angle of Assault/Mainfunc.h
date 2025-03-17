@@ -7,6 +7,7 @@
 #include <string> 
 #include <sstream>
 #include<cmath>
+#include<random>
 #define PI 3.14159265358979323846
 
 using namespace std;
@@ -42,3 +43,5 @@ typedef struct Map {
 	std::string tile[MAX_MAP_Y][MAX_MAP_X];
 	char* filename;
 };
+int randomxy(int x, int y);
+

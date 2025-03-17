@@ -5,6 +5,7 @@
 #include"map.h"
 #include"object_bar.h"
 #include"Timer.h";
+#include"Bot_object.h"
 double x_onmap;
 double y_onmap;
 Ltexture angle;
@@ -59,6 +60,10 @@ int main(int argv, char* argc[]) {
 	mObject naruto;
 	naruto.load_img("img/moveR.png", renderer);
 	naruto.set_clip();
+	//sasuke
+	bot_object sasuke;
+	sasuke.load_img("img/sasukeR.png", renderer);
+	sasuke.set_clip();
 	//rasengan
 	throw_move rasengan;
 	rasengan.load_img("img/rasengan.png", renderer);
@@ -93,6 +98,7 @@ int main(int argv, char* argc[]) {
 
 				
 		}
+		
 		//move
 		Map mapdata = game_map.getmap();
 		Map mapdata_shot = game_map.getmap();
@@ -100,18 +106,24 @@ int main(int argv, char* argc[]) {
 		naruto.move(mapdata);
 		rasengan.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
 		rasengan.arrow_shot(naruto.getx_pos(), naruto.gety_pos(), mapdata_shot);
+		sasuke.ai_control();
+		
 		//Render window
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 		//Render background
 		if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
 		{
+			sasuke.setmap_xy(mapdata.start_x, mapdata.start_y);
+			sasuke.move(mapdata);
 			game_map.setmap(mapdata);
 			SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 			background.render(renderer, &bigmap);
 		}
 		if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
 		{
+			sasuke.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
+			sasuke.move(mapdata_shot);
 			game_map.setmap(mapdata_shot);
 			SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 			background.render(renderer, &bigmap);
@@ -120,25 +132,7 @@ int main(int argv, char* argc[]) {
 		game_map.draw_map(renderer);
 		naruto.show(renderer);
 		rasengan.show(renderer);
-		// demo threat
-		x_onmap=2300;
-		y_onmap=600;
-		SDL_Rect rectA = rasengan.get_rect();
-		rectA.w /= 3;
-		if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
-		{
-			SDL_Rect rectB = { x_onmap - mapdata.start_x, y_onmap - mapdata.start_y, 100, 600 };
-			SDL_RenderFillRect(renderer, &rectB);
-			if (SDL_HasIntersection(&rectA, &rectB)) rasengan.set_intput(0);
-
-		}
-		if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
-		{
-			SDL_Rect rectB = { x_onmap - mapdata_shot.start_x, y_onmap - mapdata_shot.start_y, 100, 600 };
-			SDL_RenderFillRect(renderer, &rectB);
-			if (SDL_HasIntersection(&rectA, &rectB)) rasengan.set_intput(0);
-
-		}
+		sasuke.show(renderer);
 		// object_bar
 		if (naruto.get_input().reload == 1) {
 
@@ -150,6 +144,7 @@ int main(int argv, char* argc[]) {
 		}
 		// demo time
 		int real_time = time.get_tick()/1000;
+		
 		stringstream text;
 		text.str("");
 		text << "Time : " << real_time<<" s";
