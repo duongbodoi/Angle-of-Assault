@@ -113,7 +113,7 @@ void bot_object::show(SDL_Renderer* des) {
 	SDL_RenderCopy(des, mTexture, current_clip, &offset);
 }
 
-void bot_object::move(Map& mapdata) {
+void bot_object::move(Map& mapdata,bool turn) {
 	vel_x = 0;
 	vel_y += 2;
 	if (vel_y >= 10) vel_y = 10;
@@ -125,7 +125,10 @@ void bot_object::move(Map& mapdata) {
 		input_type.jumb = 0;
 	}
 	checkmap(mapdata);
-	//Ghimmap(mapdata);
+	if(turn)
+	{
+		Ghimmap(mapdata);
+	}
 }
 void bot_object::Ghimmap(Map& mapdata) {
 	mapdata.start_x = x_pos - SCREEN_WIDTH / 2;

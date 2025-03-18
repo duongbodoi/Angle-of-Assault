@@ -14,7 +14,7 @@ public:
 	virtual bool load_img(std::string file, SDL_Renderer* renderer);
 	void show(SDL_Renderer* des);
 	void set_clip();
-	void move(Map& mapdata);
+	void move(Map& mapdata,bool turn);
 	void ai_control();
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
 	void Ghimmap(Map& mapdata);

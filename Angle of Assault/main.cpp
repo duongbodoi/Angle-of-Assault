@@ -6,8 +6,7 @@
 #include"object_bar.h"
 #include"Timer.h";
 #include"Bot_object.h"
-double x_onmap;
-double y_onmap;
+
 Ltexture angle;
 Ltexture arrow;
 bool Init() {
@@ -52,8 +51,13 @@ void close() {
 }
 
 int main(int argv, char* argc[]) {
+	//
 	Timer time;
 	Ltexture time_text;
+	Timer your_time;
+	Ltexture your_turn;
+	Timer bot_time;
+	Ltexture bot_turn;
 	//
 	if (!Init()) return -1;
 	// naruto
@@ -78,10 +82,29 @@ int main(int argv, char* argc[]) {
 	//
 	bool running = true;
 	SDL_Event e;
-	//
+	// Time
 	time.start();
+	your_time.start();
 	while (running) {
-		
+		//Time 
+		int real_time = time.get_tick() / 1000;
+		if (your_time.is_started()) {
+			bot_time.stop();
+			if (your_time.get_tick() >= 15 * 1000) {
+				bot_time.start();
+				
+				
+			}
+		}
+		if (bot_time.is_started()) {
+			your_time.stop();
+			if (bot_time.get_tick() >= 15 * 1000) {
+				your_time.start();
+			}
+		}
+
+
+		//
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 					running = false;
@@ -98,35 +121,52 @@ int main(int argv, char* argc[]) {
 
 				
 		}
-		
-		//move
-		Map mapdata = game_map.getmap();
-		Map mapdata_shot = game_map.getmap();
-		naruto.setmap_xy(mapdata.start_x, mapdata.start_y);
-		naruto.move(mapdata);
-		rasengan.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
-		rasengan.arrow_shot(naruto.getx_pos(), naruto.gety_pos(), mapdata_shot);
-		sasuke.ai_control();
-		
 		//Render window
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
+
+
+		//move
+		Map mapdata = game_map.getmap();
+		Map mapdata_shot = game_map.getmap();
+		Map bot_mapdata = game_map.getmap();
+		Map bot_mapdata_shot = game_map.getmap();
+		naruto.setmap_xy(mapdata.start_x, mapdata.start_y);
+		naruto.move(mapdata,your_time.is_started());
+		rasengan.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
+		rasengan.arrow_shot(naruto.getx_pos(), naruto.gety_pos(), mapdata_shot);
+		sasuke.ai_control();
+		sasuke.setmap_xy(bot_mapdata.start_x, bot_mapdata.start_y);
+		sasuke.move(bot_mapdata, bot_time.is_started());
 		//Render background
-		if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
+		if(your_time.is_started())
 		{
-			sasuke.setmap_xy(mapdata.start_x, mapdata.start_y);
-			sasuke.move(mapdata);
-			game_map.setmap(mapdata);
-			SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
-			background.render(renderer, &bigmap);
+			if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
+			{
+				sasuke.setmap_xy(mapdata.start_x, mapdata.start_y);
+				sasuke.move(mapdata,bot_time.is_started());
+				game_map.setmap(mapdata);
+				SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+				background.render(renderer, &bigmap);
+			}
+			if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
+			{
+				sasuke.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
+				sasuke.move(mapdata_shot,bot_time.is_started());
+				game_map.setmap(mapdata_shot);
+				SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+				background.render(renderer, &bigmap);
+			}
 		}
-		if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
-		{
-			sasuke.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
-			sasuke.move(mapdata_shot);
-			game_map.setmap(mapdata_shot);
-			SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
-			background.render(renderer, &bigmap);
+		if (bot_time.is_started()) {
+			
+			if (sasuke.get_input().shot == 0 )
+			{
+				game_map.setmap(bot_mapdata);
+				SDL_Rect bigmap = { bot_mapdata.start_x,bot_mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+				background.render(renderer, &bigmap);
+			}
+			
 		}
 		//Render object
 		game_map.draw_map(renderer);
@@ -143,7 +183,7 @@ int main(int argv, char* argc[]) {
 			draw_angle_control(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle, arrow);
 		}
 		// demo time
-		int real_time = time.get_tick()/1000;
+		
 		
 		stringstream text;
 		text.str("");
@@ -151,7 +191,28 @@ int main(int argv, char* argc[]) {
 		SDL_Color color = { 255,15,0 };
 		time_text.loadfromtext(renderer,text.str(), color, "font.ttf");
 		time_text.set_rect(1060, 15);
-		time_text.render(renderer);
+		time_text.render(renderer); 
+		
+		if(your_time.is_started())
+		{
+			stringstream your_text;
+			your_text.str("");
+			your_text << "Your turn: " << 15 - your_time.get_tick() / 1000 << " s";
+
+			your_turn.loadfromtext(renderer, your_text.str(), color, "font.ttf");
+			your_turn.set_rect(500, 500);
+			your_turn.render(renderer);
+		}
+		if(bot_time.is_started())
+		{
+			stringstream bot_text;
+			bot_text.str("");
+			bot_text << "Bot turn: " << 15 - bot_time.get_tick() / 1000 << " s";
+
+			bot_turn.loadfromtext(renderer, bot_text.str(), color, "font.ttf");
+			bot_turn.set_rect(500, 400);
+			bot_turn.render(renderer);
+		}
 		//
 		
 		SDL_RenderPresent(renderer);

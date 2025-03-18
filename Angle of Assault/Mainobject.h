@@ -15,7 +15,7 @@ public:
 	void show(SDL_Renderer* des);
 	void Handle_event(SDL_Event e, SDL_Renderer* renderer);
 	void set_clip();
-	void move(Map& mapdata);
+	void move(Map& mapdata,bool turn);
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
 	void Ghimmap(Map& mapdata);
 	void checkmap(Map& mapdata);

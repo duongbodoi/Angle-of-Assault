@@ -184,7 +184,7 @@ void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 		}
 	}
 }
-void mObject::move(Map& mapdata) {
+void mObject::move(Map& mapdata,bool turn) {
 	vel_x = 0;
 	vel_y += 2;
 	if (vel_y >= 10) vel_y = 10;
@@ -196,7 +196,7 @@ void mObject::move(Map& mapdata) {
 		input_type.jumb = 0;
 	}
 	checkmap(mapdata);
-	Ghimmap(mapdata);
+	if(turn) Ghimmap(mapdata);
 }
 void mObject::Ghimmap(Map& mapdata) {
 	mapdata.start_x = x_pos - SCREEN_WIDTH / 2;
