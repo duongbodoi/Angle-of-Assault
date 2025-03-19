@@ -72,18 +72,25 @@ void mObject::set_clip() {
 	}
 }
 void mObject::show(SDL_Renderer* des) {
-	
-	if (status == reload_ or status == shot_) {
-		load_img("img/shot_reload.png", des);
+	static int last_status = -1;
 
+	bool need_reload_img = (status != last_status);
+
+	if (need_reload_img) {
+		if (status == reload_ or status == shot_) {
+			load_img("img/shot_reload.png", des);
+		}
+		else if (status == walk_r) {
+			load_img("img/moveR.png", des);
+		}
+		else if (status == walk_l) {
+			load_img("img/moveL.png", des);
+		}
+		last_status = status;
 	}
-	else if (status == walk_r  ) {
-		load_img("img/moveR.png", des);
-	}
-	else if (status == walk_l) {
-		load_img("img/moveL.png", des);
-	}
-	if (input_type.left == 1 or input_type.right == 1) {
+
+	
+	if (input_type.left == 1 || input_type.right == 1) {
 		frame++;
 		if (frame / 16 >= 8) {
 			frame = 16;
@@ -105,12 +112,14 @@ void mObject::show(SDL_Renderer* des) {
 		frame = 15;
 	}
 
-	mrect.x = x_pos-map_x_;
-	mrect.y = y_pos-map_y_;
+	
+	mrect.x = x_pos - map_x_;
+	mrect.y = y_pos - map_y_;
 	SDL_Rect* current_clip = &frame_clip[frame / 16];
-	SDL_Rect offset = { mrect.x,mrect.y,width_frame,heightframe };
+	SDL_Rect offset = { mrect.x, mrect.y, width_frame, heightframe };
 	SDL_RenderCopy(des, mTexture, current_clip, &offset);
 }
+
 void mObject::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 	if (e.type == SDL_KEYDOWN and e.key.repeat == 0) {
 		switch (e.key.keysym.sym)

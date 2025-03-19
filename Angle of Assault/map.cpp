@@ -12,6 +12,7 @@ void GameMap::loadmap(string path) {
             //
             file >> game_map_.tile[i][j];
             string val = game_map_.tile[i][j];
+
             if (val != "0") {
                 nametilemat.insert(val);
                 

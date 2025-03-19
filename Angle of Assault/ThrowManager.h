@@ -19,6 +19,8 @@ public:
 	void setmap_xy(const int map_x, const int map_y) { map_x_ = map_x; map_y_ = map_y; };
 	Input get_input() { return input_type; };
 	void set_intput(int x) { input_type.shot = x; };
+	bool getcolider() { return colider; };
+	void set_colider(bool check) { colider = check; };
 	int v0 = 0;
 	int phi = 0;
 	double time = 0;
@@ -33,4 +35,5 @@ private:
 	SDL_Rect frame_clip[8];
 	int map_x_;
 	int map_y_;
+	bool colider;
 };

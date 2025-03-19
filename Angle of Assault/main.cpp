@@ -6,7 +6,10 @@
 #include"object_bar.h"
 #include"Timer.h";
 #include"Bot_object.h"
-
+stringstream text;
+stringstream your_text;
+stringstream bot_text;
+SDL_Color color = { 255,15,0 };
 Ltexture angle;
 Ltexture arrow;
 bool Init() {
@@ -42,13 +45,8 @@ bool Init() {
 	}
 	return check;
 }
-void close() {
-	SDL_DestroyRenderer(renderer);
-	renderer = NULL;
-	SDL_DestroyWindow(window);
-	window = NULL;
-	SDL_QUIT;
-}
+void close();
+
 
 int main(int argv, char* argc[]) {
 	//
@@ -95,9 +93,14 @@ int main(int argv, char* argc[]) {
 				
 				
 			}
+			if (naruto.get_input().reload == 1) {
+				your_time.paused();
+			}
+			if (rasengan.getcolider()) bot_time.start();
 		}
 		if (bot_time.is_started()) {
 			your_time.stop();
+			rasengan.set_colider(false);
 			if (bot_time.get_tick() >= 15 * 1000) {
 				your_time.start();
 			}
@@ -110,9 +113,9 @@ int main(int argv, char* argc[]) {
 					running = false;
 			}
 			else if (e.type == SDL_MOUSEBUTTONDOWN) { // cai nay giup ho tro cho ra vi tri toa do x,y tren man hinh window de de dang render ra man hinh
-					int x, y;
-					SDL_GetMouseState(&x, &y);
-					printf("Mouse Clicked at: (%d, %d)\n", x, y);
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+				printf("Mouse Clicked at: (%d, %d)\n", x, y);
 			}
 
 			naruto.Handle_event(e, renderer);
@@ -185,42 +188,53 @@ int main(int argv, char* argc[]) {
 		// demo time
 		
 		
-		stringstream text;
+		
 		text.str("");
 		text << "Time : " << real_time<<" s";
-		SDL_Color color = { 255,15,0 };
+		
 		time_text.loadfromtext(renderer,text.str(), color, "font.ttf");
 		time_text.set_rect(1060, 15);
 		time_text.render(renderer); 
 		
 		if(your_time.is_started())
 		{
-			stringstream your_text;
+			
 			your_text.str("");
 			your_text << "Your turn: " << 15 - your_time.get_tick() / 1000 << " s";
 
 			your_turn.loadfromtext(renderer, your_text.str(), color, "font.ttf");
-			your_turn.set_rect(500, 500);
+			your_turn.set_rect(500, 20);
 			your_turn.render(renderer);
 		}
 		if(bot_time.is_started())
 		{
-			stringstream bot_text;
+			
 			bot_text.str("");
 			bot_text << "Bot turn: " << 15 - bot_time.get_tick() / 1000 << " s";
 
 			bot_turn.loadfromtext(renderer, bot_text.str(), color, "font.ttf");
-			bot_turn.set_rect(500, 400);
+			bot_turn.set_rect(500, 20);
 			bot_turn.render(renderer);
 		}
 		//
 		
 		SDL_RenderPresent(renderer);
 		
-		
+		time_text.free();
+		your_turn.free();
+		bot_turn.free();
+		angle.free();
+		arrow.free();
 	}
 	close();
 	return 0;
 }
-	
+
+void close() {
+	SDL_DestroyRenderer(renderer);
+	renderer = NULL;
+	SDL_DestroyWindow(window);
+	window = NULL;
+	SDL_QUIT;
+}
 

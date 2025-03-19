@@ -36,4 +36,5 @@ private:
 	int status;
 	int map_x_;
 	int map_y_;
+	
 };

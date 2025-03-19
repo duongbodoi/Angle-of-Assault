@@ -1,4 +1,4 @@
-#include"Basetexture.h"
+﻿#include"Basetexture.h"
 Ltexture::Ltexture() {
 	mTexture = NULL;
 	mrect = { 0,0,0,0 };
@@ -7,14 +7,21 @@ Ltexture::~Ltexture() {
 	free();
 }
 bool Ltexture::loadfromfile(string file, SDL_Renderer* screen) {
+	
+	free();
+
 	SDL_Texture* newtexture = NULL;
 	SDL_Surface* loadedsurface = IMG_Load(file.c_str());
-	if (loadedsurface == NULL) cout << "error loadsurface";
+	if (loadedsurface == NULL) {
+		cout << "error loadsurface: " << IMG_GetError() << endl;
+	}
 	else {
 		SDL_SetColorKey(loadedsurface, SDL_TRUE, SDL_MapRGB(loadedsurface->format, 125, 125, 125));
 		newtexture = SDL_CreateTextureFromSurface(screen, loadedsurface);
 
-		if (newtexture == NULL) cout << "error loadtexture";
+		if (newtexture == NULL) {
+			cout << "error loadtexture: " << SDL_GetError() << endl;
+		}
 		else {
 			mrect.h = loadedsurface->h;
 			mrect.w = loadedsurface->w;
@@ -24,6 +31,8 @@ bool Ltexture::loadfromfile(string file, SDL_Renderer* screen) {
 	mTexture = newtexture;
 	return mTexture != NULL;
 }
+
+
 bool Ltexture::loadfromtext(SDL_Renderer* screen,string text, SDL_Color color,string path_font) {
 	SDL_Texture* newtexture = NULL;
 	TTF_Font* gfont = TTF_OpenFont(path_font.c_str(), 30);
@@ -40,9 +49,10 @@ bool Ltexture::loadfromtext(SDL_Renderer* screen,string text, SDL_Color color,st
 		else {
 			mrect.w = surfacetext->w;
 			mrect.h = surfacetext->h;
-
 		}
 	}
+	SDL_FreeSurface(surfacetext);
+	TTF_CloseFont(gfont); 
 	mTexture = newtexture;
 	return mTexture != NULL;
 }

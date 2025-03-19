@@ -73,18 +73,25 @@ void bot_object::set_clip() {
 	}
 }
 void bot_object::show(SDL_Renderer* des) {
+	static int last_status = -1;
 
-	if (status == reload_ or status == shot_) {
-		load_img("img/shot_reload.png", des);
+	bool need_reload_img = (status != last_status);
 
+	if (need_reload_img) {
+		if (status == reload_ or status == shot_) {
+			load_img("img/shot_reload.png", des);
+		}
+		else if (status == walk_r) {
+			load_img("img/sasukeR.png", des);
+		}
+		else if (status == walk_l) {
+			load_img("img/sasukeL.png", des);
+		}
+		last_status = status;
 	}
-	else if (status == walk_r) {
-		load_img("img/sasukeR.png", des);
-	}
-	else if (status == walk_l) {
-		load_img("img/sasukeL.png", des);
-	}
-	if (input_type.left == 1 or input_type.right == 1) {
+
+	// C?p nh?t frame animation
+	if (input_type.left == 1 || input_type.right == 1) {
 		frame++;
 		if (frame / 16 >= 7) {
 			frame = 16;
@@ -106,12 +113,14 @@ void bot_object::show(SDL_Renderer* des) {
 		frame = 15;
 	}
 
+	// Render object
 	mrect.x = x_pos - map_x_;
 	mrect.y = y_pos - map_y_;
 	SDL_Rect* current_clip = &frame_clip[frame / 16];
-	SDL_Rect offset = { mrect.x,mrect.y,width_frame,heightframe };
+	SDL_Rect offset = { mrect.x, mrect.y, width_frame, heightframe };
 	SDL_RenderCopy(des, mTexture, current_clip, &offset);
 }
+
 
 void bot_object::move(Map& mapdata,bool turn) {
 	vel_x = 0;

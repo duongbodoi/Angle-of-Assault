@@ -130,14 +130,15 @@ void throw_move::checkmap(Map& mapdata) {
 				x_pos = x2 * 64;
 				x_pos -= width_frame + 1;
 				input_type.shot = 0;
-			
+				set_colider(true);
 			}
 		}
 		else {
 			if (mapdata.tile[y1][x1] != "0" or mapdata.tile[y2][x1] != "0") {
 				x_pos = (x1 + 1) * 64;
 				input_type.shot = 0;
-			
+				set_colider(true);
+
 			}
 		}
 
@@ -157,14 +158,21 @@ void throw_move::checkmap(Map& mapdata) {
 				y_pos -= heightframe + 1;
 				vel_y = 0;
 				input_type.shot = 0;
-				
+				set_colider(true);
+
 			}
 		}
 
 	}
 	
 	//
-	if (x_pos<0 or x_pos>mapdata.max_x  or y_pos>mapdata.max_y) input_type.shot = 0;
+	if (x_pos<0 or x_pos>mapdata.max_x or y_pos > mapdata.max_y) 
+	{
+		input_type.shot = 0;
+		x_pos = 0; y_pos = 0;
+		set_colider(true);
+		
+	}
 
 }
 void throw_move::show(SDL_Renderer* des) {
