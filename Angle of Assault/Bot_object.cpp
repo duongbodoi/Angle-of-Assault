@@ -2,7 +2,7 @@
 bot_object::bot_object() {
 	vel_x = 0;
 	vel_y = 0;
-	x_pos = 2300;
+	x_pos = 2400;
 	y_pos = 0;
 	frame = 0;
 	width_frame = 0;
@@ -10,11 +10,14 @@ bot_object::bot_object() {
 	status = -1;
 
 	input_type.reload = 0;
-	input_type.right = 1;
+	input_type.right = 0;
 	input_type.shot = 0;
 	map_x_ = 0;
 	map_y_ = 0;
 	smax = 0;
+	Rmax = 0;
+	Lmax = 0;
+	idemax = 0;
 }
 bot_object::~bot_object() {
 
@@ -204,11 +207,10 @@ void bot_object::checkmap(Map& mapdata) {
 
 }
 void bot_object::ai_control() {
-	if(input_type.right==1)
-	{
+	if (input_type.right == 1) {
 		ide_num++;
 		status = walk_r;
-		if (smax > 64*2 ) {
+		if (smax > Rmax) {
 			smax = 0;
 			input_type.left = 1;
 			input_type.right = 0;
@@ -217,14 +219,35 @@ void bot_object::ai_control() {
 	if (input_type.left == 1) {
 		status = walk_l;
 		ide_num++;
-		if (smax <- 64*2 ) {
+		if (smax < -Lmax) {
 			smax = 0;
 			input_type.left = 0;
 			input_type.right = 1;
 		}
 	}
-	if (ide_num >= 500) {
+	if (ide_num >= idemax) {
 		input_type.left = 0;
 		input_type.right = 0;
+		ide_num = 0;
 	}
+}
+
+void bot_object::reset() {
+	input_type.right = randomxy(0,1);
+	if (input_type.right == 1) {
+		input_type.left = 0;
+		status = walk_r;
+
+	}
+	else {
+		input_type.left = 1;
+		status = walk_l;
+	}
+	input_type.reload = 0;
+	input_type.shot = 0;
+	smax = 0;
+	ide_num = 0;
+	Rmax = randomxy(100, 300);
+	Lmax = randomxy(100, 300);
+	idemax = randomxy(50, 150);
 }

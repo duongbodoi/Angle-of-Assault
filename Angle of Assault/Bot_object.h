@@ -22,7 +22,7 @@ public:
 	int getx_pos() { return x_pos; };
 	int gety_pos() { return y_pos; };
 	Input get_input() { return input_type; };
-
+	void reset();
 	const int v = 4;
 
 private:
@@ -38,4 +38,7 @@ private:
 	int map_y_;
 	int smax;
 	int ide_num;
+	int Rmax;
+	int	Lmax;
+	int idemax;
 };

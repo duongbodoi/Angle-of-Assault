@@ -90,13 +90,17 @@ int main(int argv, char* argc[]) {
 			bot_time.stop();
 			if (your_time.get_tick() >= 15 * 1000) {
 				bot_time.start();
-				
+				sasuke.reset();
 				
 			}
 			if (naruto.get_input().reload == 1) {
 				your_time.paused();
 			}
-			if (rasengan.getcolider()) bot_time.start();
+			if (rasengan.getcolider()) 
+			{
+				bot_time.start();
+				sasuke.reset();
+			}
 		}
 		if (bot_time.is_started()) {
 			your_time.stop();
@@ -138,16 +142,17 @@ int main(int argv, char* argc[]) {
 		naruto.move(mapdata,your_time.is_started());
 		rasengan.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
 		rasengan.arrow_shot(naruto.getx_pos(), naruto.gety_pos(), mapdata_shot);
-		sasuke.ai_control();
+		
 		sasuke.setmap_xy(bot_mapdata.start_x, bot_mapdata.start_y);
 		sasuke.move(bot_mapdata, bot_time.is_started());
 		//Render background
 		if(your_time.is_started())
-		{
+		{	
+			
 			if (naruto.get_input().shot == 0 or rasengan.get_input().shot == 0)
 			{
 				sasuke.setmap_xy(mapdata.start_x, mapdata.start_y);
-				sasuke.move(mapdata,bot_time.is_started());
+				//sasuke.move(mapdata,bot_time.is_started());
 				game_map.setmap(mapdata);
 				SDL_Rect bigmap = { mapdata.start_x,mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
@@ -155,14 +160,14 @@ int main(int argv, char* argc[]) {
 			if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
 			{
 				sasuke.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
-				sasuke.move(mapdata_shot,bot_time.is_started());
+				//sasuke.move(mapdata_shot,bot_time.is_started());
 				game_map.setmap(mapdata_shot);
 				SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
 			}
 		}
 		if (bot_time.is_started()) {
-			
+			sasuke.ai_control();
 			if (sasuke.get_input().shot == 0 )
 			{
 				game_map.setmap(bot_mapdata);

@@ -2,7 +2,7 @@
 mObject::mObject() {
 	vel_x = 0;
 	vel_y = 0;
-	x_pos = 400;
+	x_pos = 2200;
 	y_pos = 0;
 	frame = 0;
 	width_frame = 0;
