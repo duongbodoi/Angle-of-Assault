@@ -28,6 +28,7 @@ typedef struct Input
 	int jumb;
 	int reload;
 	int shot;
+	int angle;
 };
 // map
 #define TILE_SIZE 64;

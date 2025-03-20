@@ -82,7 +82,7 @@ void bot_object::show(SDL_Renderer* des) {
 
 	if (need_reload_img) {
 		if (status == reload_ or status == shot_) {
-			load_img("img/shot_reload.png", des);
+			load_img("img/sasuke_reload.png", des);
 		}
 		else if (status == walk_r) {
 			load_img("img/sasukeR.png", des);
@@ -229,6 +229,16 @@ void bot_object::ai_control() {
 		input_type.left = 0;
 		input_type.right = 0;
 		ide_num = 0;
+		input_type.angle = 1;
+
+	}
+	if (input_type.reload == 1) {
+		status = reload_;
+		input_type.shot = 0;
+	}
+	if (input_type.shot == 1) {
+		status = shot_;
+		input_type.reload = 0;
 	}
 }
 
@@ -245,6 +255,8 @@ void bot_object::reset() {
 	}
 	input_type.reload = 0;
 	input_type.shot = 0;
+	input_type.angle = 0;
+
 	smax = 0;
 	ide_num = 0;
 	Rmax = randomxy(100, 300);

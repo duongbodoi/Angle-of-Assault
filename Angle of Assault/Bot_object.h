@@ -22,6 +22,9 @@ public:
 	int getx_pos() { return x_pos; };
 	int gety_pos() { return y_pos; };
 	Input get_input() { return input_type; };
+	void set_intputshot(int x) { input_type.shot = x; };
+	void set_inputangle(int x) { input_type.angle = x; };
+	void set_inputreload(int x) { input_type.reload = x; };
 	void reset();
 	const int v = 4;
 

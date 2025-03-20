@@ -6,12 +6,16 @@
 #include"object_bar.h"
 #include"Timer.h";
 #include"Bot_object.h"
+#include"bot_throw.h"
 stringstream text;
 stringstream your_text;
 stringstream bot_text;
 SDL_Color color = { 255,15,0 };
-Ltexture angle;
-Ltexture arrow;
+Ltexture angle_sasuke;
+Ltexture arrow_sasuke;
+Ltexture angle_naruto;
+Ltexture arrow_naruto;
+
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -70,6 +74,10 @@ int main(int argv, char* argc[]) {
 	throw_move rasengan;
 	rasengan.load_img("img/rasengan.png", renderer);
 	rasengan.set_clip();
+	//chidori
+	bot_throw chidori;
+	chidori.load_img("img/chidori.png", renderer);
+	chidori.set_clip();
 	//map
 	GameMap game_map;
 	game_map.loadmap("map.txt");
@@ -90,6 +98,7 @@ int main(int argv, char* argc[]) {
 			bot_time.stop();
 			if (your_time.get_tick() >= 15 * 1000) {
 				bot_time.start();
+				chidori.reset();
 				sasuke.reset();
 				
 			}
@@ -99,7 +108,9 @@ int main(int argv, char* argc[]) {
 			if (rasengan.getcolider()) 
 			{
 				bot_time.start();
+				chidori.reset();
 				sasuke.reset();
+				
 			}
 		}
 		if (bot_time.is_started()) {
@@ -145,6 +156,8 @@ int main(int argv, char* argc[]) {
 		
 		sasuke.setmap_xy(bot_mapdata.start_x, bot_mapdata.start_y);
 		sasuke.move(bot_mapdata, bot_time.is_started());
+		chidori.setmap_xy(bot_mapdata_shot.start_x, bot_mapdata_shot.start_y);
+		chidori.arrow_shot(sasuke.getx_pos(), sasuke.gety_pos(), bot_mapdata_shot);
 		//Render background
 		if(your_time.is_started())
 		{	
@@ -168,27 +181,48 @@ int main(int argv, char* argc[]) {
 		}
 		if (bot_time.is_started()) {
 			sasuke.ai_control();
+			chidori.ai_control();
+			if (sasuke.get_input().angle == 1) chidori.set_inputangle(1);
+			if (chidori.get_input().reload == 1) sasuke.set_inputreload(1);
+			if (chidori.get_input().shot == 1) sasuke.set_intputshot(1);
 			if (sasuke.get_input().shot == 0 )
 			{
 				game_map.setmap(bot_mapdata);
 				SDL_Rect bigmap = { bot_mapdata.start_x,bot_mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
 			}
-			
+			if (sasuke.get_input().shot == 1)
+			{
+				game_map.setmap(bot_mapdata_shot);
+				SDL_Rect bigmap = { bot_mapdata_shot.start_x,bot_mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
+				background.render(renderer, &bigmap);
+			}
 		}
 		//Render object
 		game_map.draw_map(renderer);
 		naruto.show(renderer);
 		rasengan.show(renderer);
 		sasuke.show(renderer);
+		chidori.show(renderer);
 		// object_bar
+
+		if (sasuke.get_input().reload == 1) {
+
+			draw_powerbar(renderer, chidori.v0, sasuke.get_rect().x - 50, sasuke.get_rect().y + 100);
+			
+		}
+		if (sasuke.get_input().left != 1 and sasuke.get_input().right != 1) {
+			draw_angle_control(renderer, chidori.phi, sasuke.get_rect().x + 50, sasuke.get_rect().y - 225, angle_sasuke, arrow_sasuke);
+		}
+
+		
 		if (naruto.get_input().reload == 1) {
 
 			draw_powerbar(renderer, rasengan.v0, naruto.get_rect().x - 50, naruto.get_rect().y + 100);
-			
+
 		}
 		if (naruto.get_input().left != 1 and naruto.get_input().right != 1) {
-			draw_angle_control(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle, arrow);
+			draw_angle_control(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle_naruto, arrow_naruto);
 		}
 		// demo time
 		
@@ -228,8 +262,10 @@ int main(int argv, char* argc[]) {
 		time_text.free();
 		your_turn.free();
 		bot_turn.free();
-		angle.free();
-		arrow.free();
+		angle_sasuke.free();
+		arrow_sasuke.free();
+		angle_naruto.free();
+		arrow_naruto.free();
 	}
 	close();
 	return 0;

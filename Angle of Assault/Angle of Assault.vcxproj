@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="Basetexture.cpp" />
     <ClCompile Include="Bot_object.cpp" />
+    <ClCompile Include="bot_throw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mainfunc.cpp" />
     <ClCompile Include="Mainobject.cpp" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="Basetexture.h" />
     <ClInclude Include="Bot_object.h" />
+    <ClInclude Include="bot_throw.h" />
     <ClInclude Include="Mainfunc.h" />
     <ClInclude Include="Mainobject.h" />
     <ClInclude Include="map.h" />
