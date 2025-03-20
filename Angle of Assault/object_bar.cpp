@@ -53,7 +53,7 @@ void draw_powerbar(SDL_Renderer* screen, int v0, int x, int y) {
 }
 
 
-void draw_angle_control(SDL_Renderer* screen, int phi, int x, int y, Ltexture angle_, Ltexture arrow_) {
+void draw_angle_control_L(SDL_Renderer* screen, int phi, int x, int y, Ltexture angle_, Ltexture arrow_) {
     if (!angle_.loadfromfile("img/angle.png", screen)) cout << "error angle";
     if (!arrow_.loadfromfile("img/arrow1.png", screen)) cout << "error arrow";
     angle_.set_rect(x, y);
@@ -64,5 +64,18 @@ void draw_angle_control(SDL_Renderer* screen, int phi, int x, int y, Ltexture an
     SDL_Point centre = {3,7};
     arrow_.render360(screen, rect_angle.x, rect_angle.y+205, NULL, -phi, &centre, SDL_FLIP_NONE);
     
+
+}
+void draw_angle_control_R(SDL_Renderer* screen, int phi, int x, int y, Ltexture angle_, Ltexture arrow_) {
+    if (!angle_.loadfromfile("img/angle2.png", screen)) cout << "error angle";
+    if (!arrow_.loadfromfile("img/arrow2.png", screen)) cout << "error arrow";
+    angle_.set_rect(x, y);
+    angle_.render(screen);
+
+    SDL_Rect rect_angle = angle_.get_rect();
+
+    SDL_Point centre = {253,9};
+    arrow_.render360(screen, rect_angle.x-33, rect_angle.y + 205, NULL, phi, &centre, SDL_FLIP_NONE);
+
 
 }

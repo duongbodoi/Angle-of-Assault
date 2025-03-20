@@ -2,7 +2,7 @@
 bot_object::bot_object() {
 	vel_x = 0;
 	vel_y = 0;
-	x_pos = 2400;
+	x_pos = 2500;
 	y_pos = 0;
 	frame = 0;
 	width_frame = 0;

@@ -118,6 +118,10 @@ int main(int argv, char* argc[]) {
 			rasengan.set_colider(false);
 			if (bot_time.get_tick() >= 15 * 1000) {
 				your_time.start();
+
+			}
+			if (chidori.getcolider()) {
+				your_time.start();
 			}
 		}
 
@@ -185,14 +189,16 @@ int main(int argv, char* argc[]) {
 			if (sasuke.get_input().angle == 1) chidori.set_inputangle(1);
 			if (chidori.get_input().reload == 1) sasuke.set_inputreload(1);
 			if (chidori.get_input().shot == 1) sasuke.set_intputshot(1);
-			if (sasuke.get_input().shot == 0 )
+			if (sasuke.get_input().shot == 0 or chidori.get_input().shot==0)
 			{
+				naruto.setmap_xy(bot_mapdata.start_x, bot_mapdata.start_y);
 				game_map.setmap(bot_mapdata);
 				SDL_Rect bigmap = { bot_mapdata.start_x,bot_mapdata.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
 			}
-			if (sasuke.get_input().shot == 1)
+			if (sasuke.get_input().shot == 1 or chidori.get_input().shot == 1)
 			{
+				naruto.setmap_xy(bot_mapdata_shot.start_x, bot_mapdata_shot.start_y);
 				game_map.setmap(bot_mapdata_shot);
 				SDL_Rect bigmap = { bot_mapdata_shot.start_x,bot_mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
@@ -212,7 +218,7 @@ int main(int argv, char* argc[]) {
 			
 		}
 		if (sasuke.get_input().left != 1 and sasuke.get_input().right != 1) {
-			draw_angle_control(renderer, chidori.phi, sasuke.get_rect().x + 50, sasuke.get_rect().y - 225, angle_sasuke, arrow_sasuke);
+			draw_angle_control_R(renderer, chidori.phi, sasuke.get_rect().x - 200, sasuke.get_rect().y - 200, angle_sasuke, arrow_sasuke);
 		}
 
 		
@@ -222,7 +228,7 @@ int main(int argv, char* argc[]) {
 
 		}
 		if (naruto.get_input().left != 1 and naruto.get_input().right != 1) {
-			draw_angle_control(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle_naruto, arrow_naruto);
+			draw_angle_control_L(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle_naruto, arrow_naruto);
 		}
 		// demo time
 		

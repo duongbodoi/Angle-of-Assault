@@ -209,6 +209,7 @@ void bot_throw::ai_control() {
 			input_type.angle = 0;
 		}
 	}
+	
 }
 void bot_throw::reset() {
 	v0 = 0;
@@ -219,4 +220,5 @@ void bot_throw::reset() {
 	input_type.shot = 0;
 	phi_shot = randomxy(30, 80);
 	v0_shot = (80, 140);
+
 }
