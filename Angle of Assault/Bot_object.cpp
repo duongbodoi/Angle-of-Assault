@@ -1,4 +1,4 @@
-#include"Bot_object.h"
+﻿#include"Bot_object.h"
 bot_object::bot_object() {
 	vel_x = 0;
 	vel_y = 0;
@@ -81,7 +81,7 @@ void bot_object::show(SDL_Renderer* des) {
 	bool need_reload_img = (status != last_status);
 
 	if (need_reload_img) {
-		if (status == reload_ or status == shot_) {
+		if (status == reload_ || status == shot_) {
 			load_img("img/sasuke_reload.png", des);
 		}
 		else if (status == walk_r) {
@@ -93,27 +93,26 @@ void bot_object::show(SDL_Renderer* des) {
 		last_status = status;
 	}
 
-	// C?p nh?t frame animation
-	if (input_type.left == 1 || input_type.right == 1) {
-		frame++;
-		if (frame / 16 >= 7) {
-			frame = 16;
+	// Xử lý animation
+	if (input_type.shot == 1) {
+		frame += 2;
+		if (frame / 16 >= 5) {
+			frame = 15; 
+			input_type.shot = 0;  
+			status = -1;  
 		}
 	}
 	else if (input_type.reload == 1) {
-		frame++;
-		if (frame / 16 >= 1) {
-			frame = 16;
-		}
+		frame = 16;  // Giữ nguyên trạng thái nạp đạn
 	}
-	else if (input_type.shot == 1) {
-		frame += 3;
-		if (frame / 16 >= 4) {
-			input_type.shot = 0;
+	else if (input_type.left == 1 || input_type.right == 1) {
+		frame += 1;
+		if (frame / 16 >= 7) { 
+			frame = 0;
 		}
 	}
 	else {
-		frame = 15;
+		frame = 15;  
 	}
 
 	// Render object
@@ -123,6 +122,7 @@ void bot_object::show(SDL_Renderer* des) {
 	SDL_Rect offset = { mrect.x, mrect.y, width_frame, heightframe };
 	SDL_RenderCopy(des, mTexture, current_clip, &offset);
 }
+
 
 
 void bot_object::move(Map& mapdata,bool turn) {
@@ -234,11 +234,13 @@ void bot_object::ai_control() {
 	}
 	if (input_type.reload == 1) {
 		status = reload_;
-		input_type.shot = 0;
+		
+		input_type.angle = 0;
 	}
-	if (input_type.shot == 1) {
+	if (input_type.shot == 1 && status != shot_) {
 		status = shot_;
 		input_type.reload = 0;
+		input_type.angle = 0;
 	}
 }
 

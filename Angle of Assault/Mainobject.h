@@ -24,7 +24,8 @@ public:
 	Input get_input() { return input_type; };
 	
 	const int v = 4;
-
+	const int HPmax = 100;
+	int hp = 100;
 private:
 	double vel_x, vel_y;
 	double x_pos, y_pos;

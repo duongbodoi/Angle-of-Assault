@@ -79,3 +79,21 @@ void draw_angle_control_R(SDL_Renderer* screen, int phi, int x, int y, Ltexture 
 
 
 }
+void draw_HP(SDL_Renderer* screen, int hp, int max_hp, int x, int y) {
+    const int HP_BAR_WIDTH = 50;  
+    const int HP_BAR_HEIGHT = 8;  
+
+    
+    SDL_SetRenderDrawColor(screen, 50, 50, 50, 255);
+    SDL_Rect hp_background = { x, y, HP_BAR_WIDTH, HP_BAR_HEIGHT };
+    SDL_RenderFillRect(screen, &hp_background);
+
+    
+    float hp_ratio = (float)hp / max_hp;  
+    int hp_width = (int)(HP_BAR_WIDTH * hp_ratio); 
+
+    SDL_SetRenderDrawColor(screen, 255, 0, 0, 255);
+    SDL_Rect hp_bar = { x, y, hp_width, HP_BAR_HEIGHT };
+    SDL_RenderFillRect(screen, &hp_bar);
+}
+

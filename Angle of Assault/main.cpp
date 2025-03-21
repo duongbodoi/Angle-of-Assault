@@ -15,7 +15,12 @@ Ltexture angle_sasuke;
 Ltexture arrow_sasuke;
 Ltexture angle_naruto;
 Ltexture arrow_naruto;
-
+Ltexture hp_sasuke;
+Ltexture hp_naruto;
+SDL_Rect sasuke_rect;
+SDL_Rect naruto_rect;
+SDL_Rect rasengan_rect;
+SDL_Rect chidori_rect;
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -95,6 +100,7 @@ int main(int argv, char* argc[]) {
 		//Time 
 		int real_time = time.get_tick() / 1000;
 		if (your_time.is_started()) {
+			chidori.set_colider(false);
 			bot_time.stop();
 			if (your_time.get_tick() >= 15 * 1000) {
 				bot_time.start();
@@ -118,10 +124,11 @@ int main(int argv, char* argc[]) {
 			rasengan.set_colider(false);
 			if (bot_time.get_tick() >= 15 * 1000) {
 				your_time.start();
-
+				
 			}
 			if (chidori.getcolider()) {
 				your_time.start();
+				
 			}
 		}
 
@@ -176,11 +183,19 @@ int main(int argv, char* argc[]) {
 			}
 			if (rasengan.get_input().shot == 1 or naruto.get_input().shot == 1)
 			{
+				sasuke_rect = sasuke.get_rect();
+				rasengan_rect = rasengan.get_rect();
 				sasuke.setmap_xy(mapdata_shot.start_x, mapdata_shot.start_y);
 				//sasuke.move(mapdata_shot,bot_time.is_started());
 				game_map.setmap(mapdata_shot);
 				SDL_Rect bigmap = { mapdata_shot.start_x,mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
+				// xu li va cham
+				if (SDL_HasIntersection(&rasengan_rect, &sasuke_rect)) {
+					sasuke.hp -= 10;
+					if (sasuke.hp < 0) sasuke.hp = 0;
+					rasengan.set_colider(true);
+				}
 			}
 		}
 		if (bot_time.is_started()) {
@@ -188,7 +203,11 @@ int main(int argv, char* argc[]) {
 			chidori.ai_control();
 			if (sasuke.get_input().angle == 1) chidori.set_inputangle(1);
 			if (chidori.get_input().reload == 1) sasuke.set_inputreload(1);
-			if (chidori.get_input().shot == 1) sasuke.set_intputshot(1);
+			if (chidori.get_input().reload == 0) sasuke.set_inputreload(0);
+			if (chidori.get_input().shot == 1 && sasuke.get_input().shot == 0) {
+				sasuke.set_intputshot(1);
+			}
+
 			if (sasuke.get_input().shot == 0 or chidori.get_input().shot==0)
 			{
 				naruto.setmap_xy(bot_mapdata.start_x, bot_mapdata.start_y);
@@ -198,10 +217,17 @@ int main(int argv, char* argc[]) {
 			}
 			if (sasuke.get_input().shot == 1 or chidori.get_input().shot == 1)
 			{
+				chidori_rect = chidori.get_rect();
+				naruto_rect = naruto.get_rect();
 				naruto.setmap_xy(bot_mapdata_shot.start_x, bot_mapdata_shot.start_y);
 				game_map.setmap(bot_mapdata_shot);
 				SDL_Rect bigmap = { bot_mapdata_shot.start_x,bot_mapdata_shot.start_y,SCREEN_WIDTH,SCREEN_HEIGHT };
 				background.render(renderer, &bigmap);
+				if (SDL_HasIntersection(&chidori_rect, &naruto_rect)) {
+					naruto.hp -= 10;
+					if (naruto.hp <= 0) naruto.hp = 0;
+					chidori.set_colider(true);
+				}
 			}
 		}
 		//Render object
@@ -211,8 +237,9 @@ int main(int argv, char* argc[]) {
 		sasuke.show(renderer);
 		chidori.show(renderer);
 		// object_bar
-
-		if (sasuke.get_input().reload == 1) {
+		draw_HP(renderer, naruto.hp, naruto.HPmax, naruto.get_rect().x +25, naruto.get_rect().y -6);
+		draw_HP(renderer, sasuke.hp, sasuke.HPmax, sasuke.get_rect().x + 22, sasuke.get_rect().y - 6);
+		if (chidori.get_input().reload == 1) {
 
 			draw_powerbar(renderer, chidori.v0, sasuke.get_rect().x - 50, sasuke.get_rect().y + 100);
 			
@@ -230,6 +257,7 @@ int main(int argv, char* argc[]) {
 		if (naruto.get_input().left != 1 and naruto.get_input().right != 1) {
 			draw_angle_control_L(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle_naruto, arrow_naruto);
 		}
+		
 		// demo time
 		
 		
@@ -272,6 +300,7 @@ int main(int argv, char* argc[]) {
 		arrow_sasuke.free();
 		angle_naruto.free();
 		arrow_naruto.free();
+	
 	}
 	close();
 	return 0;

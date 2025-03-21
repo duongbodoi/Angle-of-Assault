@@ -120,7 +120,11 @@ void bot_throw::checkmap(Map& mapdata) {
 		set_colider(true);
 
 	}
-
+	if (colider) {
+		input_type.angle = 0;
+		input_type.reload = 0;
+		input_type.shot = 0;
+	}
 }
 void bot_throw::show(SDL_Renderer* des) {
 	if (input_type.shot == 1) {
@@ -209,7 +213,10 @@ void bot_throw::ai_control() {
 			input_type.angle = 0;
 		}
 	}
-	
+	if (input_type.shot == 1) {
+		input_type.angle = 0;
+		input_type.reload = 0;
+	}
 }
 void bot_throw::reset() {
 	v0 = 0;

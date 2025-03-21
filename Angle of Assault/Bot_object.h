@@ -27,7 +27,8 @@ public:
 	void set_inputreload(int x) { input_type.reload = x; };
 	void reset();
 	const int v = 4;
-
+	const int HPmax = 100;
+	int hp = 100;
 private:
 	double vel_x, vel_y;
 	double x_pos, y_pos;
