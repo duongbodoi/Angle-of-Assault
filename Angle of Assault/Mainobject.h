@@ -22,7 +22,6 @@ public:
 	int getx_pos() { return x_pos; };
 	int gety_pos() { return y_pos; };
 	Input get_input() { return input_type; };
-	
 	const int v = 4;
 	const int HPmax = 100;
 	int hp = 100;

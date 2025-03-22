@@ -23,6 +23,8 @@ bool mObject::load_img(std::string file, SDL_Renderer* renderer) {
 	if (ret == true) {
 		width_frame = 94;
 		heightframe = mrect.h;
+		mrect.w = width_frame;
+		mrect.h = heightframe;
 	}
 	return ret;
 }

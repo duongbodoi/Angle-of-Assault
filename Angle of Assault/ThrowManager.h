@@ -18,6 +18,8 @@ public:
 	void set_intput(int x) { input_type.shot = x; };
 	bool getcolider() { return colider; };
 	void set_colider(bool check) { colider = check; };
+	int getx_pos() { return x_pos; };
+	int gety_pos() { return y_pos; };
 	int v0 = 0;
 	int phi = 0;
 	double time = 0;

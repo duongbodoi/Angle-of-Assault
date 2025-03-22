@@ -27,6 +27,8 @@ bool bot_object::load_img(std::string file, SDL_Renderer* renderer) {
 	if (ret == true) {
 		width_frame = 74;
 		heightframe = mrect.h;
+		mrect.w = width_frame;
+		mrect.h = width_frame;
 	}
 	return ret;
 }
@@ -215,11 +217,21 @@ void bot_object::ai_control() {
 			input_type.left = 1;
 			input_type.right = 0;
 		}
+		if (x_pos + vel_x >= 49 * 64) {
+			smax = 0;
+			input_type.left = 1;
+			input_type.right = 0;
+		}
 	}
 	if (input_type.left == 1) {
 		status = walk_l;
 		ide_num++;
 		if (smax < -Lmax) {
+			smax = 0;
+			input_type.left = 0;
+			input_type.right = 1;
+		}
+		if (x_pos - vel_y <= 64 * 31) {
 			smax = 0;
 			input_type.left = 0;
 			input_type.right = 1;

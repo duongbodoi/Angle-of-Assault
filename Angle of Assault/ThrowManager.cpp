@@ -78,7 +78,7 @@ void throw_move::arrow_shot(double x,double y, Map& mapdata) {
 	x0 = x + 5;
 	y0 = y - 20;
 	double radian = phi * PI / 180;
-	if (input_type.reload == 1) {
+	if (input_type.reload == 1 && !colider) {
 		v0 += 2;
 		if (v0 >= 200) v0 = 200;
 		time = 0;
@@ -130,6 +130,8 @@ void throw_move::checkmap(Map& mapdata) {
 				x_pos = x2 * 64;
 				x_pos -= width_frame + 1;
 				input_type.shot = 0;
+				v0 = 0;
+				time = 0;
 				set_colider(true);
 			}
 		}
@@ -137,6 +139,8 @@ void throw_move::checkmap(Map& mapdata) {
 			if (mapdata.tile[y1][x1] != "0" or mapdata.tile[y2][x1] != "0") {
 				x_pos = (x1 + 1) * 64;
 				input_type.shot = 0;
+				v0 = 0;
+				time = 0;
 				set_colider(true);
 
 			}
@@ -156,7 +160,8 @@ void throw_move::checkmap(Map& mapdata) {
 			if (mapdata.tile[y2][x1] != "0" or mapdata.tile[y2][x2] != "0") {
 				y_pos = y2 * 64;
 				y_pos -= heightframe + 1;
-				vel_y = 0;
+				v0 = 0;
+				time = 0;
 				input_type.shot = 0;
 				set_colider(true);
 
@@ -168,10 +173,18 @@ void throw_move::checkmap(Map& mapdata) {
 	//
 	if (x_pos<0 or x_pos>mapdata.max_x or y_pos > mapdata.max_y) 
 	{
+		v0 = 0;
+		time = 0;
 		input_type.shot = 0;
-		x_pos = 0; y_pos = 0;
 		set_colider(true);
 		
+	}
+	if (colider) {
+		v0 = 0;
+		time = 0;
+		x_pos = 1;
+		y_pos = 1;
+		input_type.shot = 0;
 	}
 
 }
@@ -203,6 +216,8 @@ bool throw_move::load_img(std::string file, SDL_Renderer* renderer) {
 	if (ret == true) {
 		width_frame = mrect.w / 3;
 		heightframe = mrect.h;
+		mrect.w = width_frame;
+		mrect.h = heightframe;
 	}
 	return ret;
 }

@@ -24,6 +24,8 @@ public:
 	void set_colider(bool check) { colider = check; };
 	void ai_control();
 	void reset();
+	int getx_pos() { return x_pos; };
+	int gety_pos() { return y_pos; };
 	int v0 = 0;
 	int phi = 0;
 	double time = 0;

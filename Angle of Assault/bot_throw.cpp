@@ -76,6 +76,8 @@ void bot_throw::checkmap(Map& mapdata) {
 			if (mapdata.tile[y1][x2] != "0" or mapdata.tile[y2][x2] != "0") {
 				x_pos = x2 * 64;
 				x_pos -= width_frame + 1;
+				v0 = 0;
+				time = 0;
 				input_type.shot = 0;
 				set_colider(true);
 			}
@@ -84,6 +86,8 @@ void bot_throw::checkmap(Map& mapdata) {
 			if (mapdata.tile[y1][x1] != "0" or mapdata.tile[y2][x1] != "0") {
 				x_pos = (x1 + 1) * 64;
 				input_type.shot = 0;
+				v0 = 0;
+				time = 0;
 				set_colider(true);
 
 			}
@@ -103,7 +107,8 @@ void bot_throw::checkmap(Map& mapdata) {
 			if (mapdata.tile[y2][x1] != "0" or mapdata.tile[y2][x2] != "0") {
 				y_pos = y2 * 64;
 				y_pos -= heightframe + 1;
-				vel_y = 0;
+				v0 = 0;
+				time = 0;
 				input_type.shot = 0;
 				set_colider(true);
 
@@ -115,8 +120,9 @@ void bot_throw::checkmap(Map& mapdata) {
 	//
 	if (x_pos<0 or x_pos>mapdata.max_x or y_pos > mapdata.max_y)
 	{
+		v0 = 0;
+		time = 0;
 		input_type.shot = 0;
-		x_pos = 0; y_pos = 0;
 		set_colider(true);
 
 	}
@@ -124,6 +130,8 @@ void bot_throw::checkmap(Map& mapdata) {
 		input_type.angle = 0;
 		input_type.reload = 0;
 		input_type.shot = 0;
+		v0 = 0;
+		time = 0;
 	}
 }
 void bot_throw::show(SDL_Renderer* des) {
@@ -154,6 +162,8 @@ bool bot_throw::load_img(std::string file, SDL_Renderer* renderer) {
 	if (ret == true) {
 		width_frame = mrect.w / 2;
 		heightframe = mrect.h;
+		mrect.w = width_frame;
+		mrect.h = heightframe;
 	}
 	return ret;
 }
@@ -225,7 +235,7 @@ void bot_throw::reset() {
 	input_type.angle = 0;
 	input_type.reload = 0;
 	input_type.shot = 0;
-	phi_shot = randomxy(30, 80);
+	phi_shot = randomxy(30, 70);
 	v0_shot = (80, 140);
 
 }
