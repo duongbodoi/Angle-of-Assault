@@ -257,6 +257,7 @@ void bot_object::ai_control() {
 }
 
 void bot_object::reset() {
+	
 	input_type.right = randomxy(0,1);
 	if (input_type.right == 1) {
 		input_type.left = 0;

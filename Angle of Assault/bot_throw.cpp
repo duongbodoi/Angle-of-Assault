@@ -229,6 +229,8 @@ void bot_throw::ai_control() {
 	}
 }
 void bot_throw::reset() {
+	x_pos = 1;
+	y_pos = 1;
 	v0 = 0;
 	input_type.aim_down = 0;
 	input_type.aim_up = 0;

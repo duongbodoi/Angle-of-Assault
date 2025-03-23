@@ -100,8 +100,8 @@ int main(int argv, char* argc[]) {
 		//Time 
 		int real_time = time.get_tick() / 1000;
 		if (your_time.is_started()) {
-			chidori.set_colider(false);
 			bot_time.stop();
+			chidori.set_colider(false);
 			if (your_time.get_tick() >= 15 * 1000) {
 				bot_time.start();
 				chidori.reset();
@@ -127,6 +127,9 @@ int main(int argv, char* argc[]) {
 				your_time.start();
 				SDL_Delay(100);
 
+			}
+			if (sasuke.get_input().reload == 1) {
+				bot_time.paused();
 			}
 			if (chidori.getcolider()) {
 				your_time.start();
@@ -262,7 +265,7 @@ int main(int argv, char* argc[]) {
 			draw_powerbar(renderer, chidori.v0, sasuke.get_rect().x - 50, sasuke.get_rect().y + 100);
 			
 		}
-		if (sasuke.get_input().left != 1 and sasuke.get_input().right != 1) {
+		if (sasuke.get_input().left != 1 and sasuke.get_input().right != 1 and bot_time.is_started()) {
 			draw_angle_control_R(renderer, chidori.phi, sasuke.get_rect().x - 200, sasuke.get_rect().y - 200, angle_sasuke, arrow_sasuke);
 		}
 
@@ -272,7 +275,7 @@ int main(int argv, char* argc[]) {
 			draw_powerbar(renderer, rasengan.v0, naruto.get_rect().x - 50, naruto.get_rect().y + 100);
 
 		}
-		if (naruto.get_input().left != 1 and naruto.get_input().right != 1) {
+		if (naruto.get_input().left != 1 and naruto.get_input().right != 1 and your_time.is_started()) {
 			draw_angle_control_L(renderer, rasengan.phi, naruto.get_rect().x + 50, naruto.get_rect().y - 225, angle_naruto, arrow_naruto);
 		}
 		

@@ -35,7 +35,7 @@ bool Ltexture::loadfromfile(string file, SDL_Renderer* screen) {
 
 bool Ltexture::loadfromtext(SDL_Renderer* screen,string text, SDL_Color color,string path_font) {
 	SDL_Texture* newtexture = NULL;
-	TTF_Font* gfont = TTF_OpenFont(path_font.c_str(), 30);
+	TTF_Font* gfont = TTF_OpenFont(path_font.c_str(), 50);
 	if (gfont == NULL) cout << "error font";
 	SDL_Surface* surfacetext = TTF_RenderText_Solid(gfont, text.c_str(), color);
 	if (surfacetext == NULL) {
