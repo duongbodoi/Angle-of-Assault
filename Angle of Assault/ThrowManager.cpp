@@ -11,7 +11,11 @@ throw_move::~throw_move() {
 }
 void throw_move::Handle_event(SDL_Event e, SDL_Renderer* renderer) {
 	if (e.type == SDL_KEYDOWN) {
-		if (e.key.repeat == 0 and e.key.keysym.sym == SDLK_SPACE) v0 = 0;
+		if (e.key.repeat == 0 and e.key.keysym.sym == SDLK_SPACE) 
+		{
+			v0_last = v0;
+			v0 = 0;
+		}
 		switch (e.key.keysym.sym)
 		{
 		case SDLK_SPACE:
@@ -130,7 +134,7 @@ void throw_move::checkmap(Map& mapdata) {
 				x_pos = x2 * 64;
 				x_pos -= width_frame + 1;
 				input_type.shot = 0;
-				v0 = 0;
+				//v0 = 0;
 				time = 0;
 				set_colider(true);
 			}
@@ -139,7 +143,7 @@ void throw_move::checkmap(Map& mapdata) {
 			if (mapdata.tile[y1][x1] != "0" or mapdata.tile[y2][x1] != "0") {
 				x_pos = (x1 + 1) * 64;
 				input_type.shot = 0;
-				v0 = 0;
+				//v0 = 0;
 				time = 0;
 				set_colider(true);
 
@@ -160,7 +164,7 @@ void throw_move::checkmap(Map& mapdata) {
 			if (mapdata.tile[y2][x1] != "0" or mapdata.tile[y2][x2] != "0") {
 				y_pos = y2 * 64;
 				y_pos -= heightframe + 1;
-				v0 = 0;
+				//v0 = 0;
 				time = 0;
 				input_type.shot = 0;
 				set_colider(true);
@@ -173,14 +177,14 @@ void throw_move::checkmap(Map& mapdata) {
 	//
 	if (x_pos<0 or x_pos>mapdata.max_x or y_pos > mapdata.max_y) 
 	{
-		v0 = 0;
+		//v0 = 0;
 		time = 0;
 		input_type.shot = 0;
 		set_colider(true);
 		
 	}
 	if (colider) {
-		v0 = 0;
+		//v0 = 0;
 		time = 0;
 		x_pos = 1;
 		y_pos = 1;

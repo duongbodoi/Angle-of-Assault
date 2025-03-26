@@ -23,13 +23,15 @@ public:
 	bool getcolider() { return colider; };
 	void set_colider(bool check) { colider = check; };
 	void ai_control();
-	void reset();
+	void reset(double x,double y);
 	int getx_pos() { return x_pos; };
 	int gety_pos() { return y_pos; };
+	int caculate(double x, double y);
 	int v0 = 0;
 	int phi = 0;
 	double time = 0;
 	double x0 = 0, y0 = 0;
+	int v0_last = 0;
 private:
 	double vel_x, vel_y;
 	double x_pos, y_pos;

@@ -21,6 +21,8 @@ SDL_Rect sasuke_rect;
 SDL_Rect naruto_rect;
 SDL_Rect rasengan_rect;
 SDL_Rect chidori_rect;
+Ltexture you_win;
+Ltexture bot_win;
 bool Init() {
 	bool check = true;
 	int ret = SDL_Init(SDL_INIT_VIDEO);
@@ -67,6 +69,9 @@ int main(int argv, char* argc[]) {
 	Ltexture bot_turn;
 	//
 	if (!Init()) return -1;
+	//
+	you_win.loadfromtext(renderer, "You win >.< Congratulate !!", color, "font.ttf");
+	bot_win.loadfromtext(renderer, "Bot win ;) you lose :(", color, "font.ttf");
 	// naruto
 	mObject naruto;
 	naruto.load_img("img/moveR.png", renderer);
@@ -104,7 +109,7 @@ int main(int argv, char* argc[]) {
 			chidori.set_colider(false);
 			if (your_time.get_tick() >= 15 * 1000) {
 				bot_time.start();
-				chidori.reset();
+				chidori.reset(naruto.getx_pos(), naruto.gety_pos());
 				sasuke.reset();
 				SDL_Delay(100);
 
@@ -115,7 +120,7 @@ int main(int argv, char* argc[]) {
 			if (rasengan.getcolider() ) 
 			{
 				bot_time.start();
-				chidori.reset();
+				chidori.reset(naruto.getx_pos(), naruto.gety_pos());
 				sasuke.reset();
 				SDL_Delay(100);
 			}
@@ -203,7 +208,11 @@ int main(int argv, char* argc[]) {
 				// xu li va cham
 				if (SDL_HasIntersection(&rasengan_rect, &sasuke_rect) && !rasengan.getcolider()) {
 					sasuke.hp -= 10;
-					if (sasuke.hp < 0) sasuke.hp = 0;
+					if (sasuke.hp < 0)
+					{
+						sasuke.hp = 0;
+						you_win.render(renderer);
+					}
 					rasengan.set_colider(true);
 					rasengan.set_intput(0);  
 				}
@@ -243,7 +252,11 @@ int main(int argv, char* argc[]) {
 				if (SDL_HasIntersection(&chidori_rect, &naruto_rect)) {
 					if (!chidori.getcolider()) {
 						naruto.hp -= 10;
-						if (naruto.hp <= 0) naruto.hp = 0;
+						if (naruto.hp <= 0) 
+						{
+							naruto.hp = 0;
+							bot_win.render(renderer);
+						}
 						chidori.set_colider(true);
 					}
 					
@@ -262,7 +275,7 @@ int main(int argv, char* argc[]) {
 		draw_HP(renderer, sasuke.hp, sasuke.HPmax, sasuke.get_rect().x + 22, sasuke.get_rect().y - 6);
 		if (chidori.get_input().reload == 1) {
 
-			draw_powerbar(renderer, chidori.v0, sasuke.get_rect().x - 50, sasuke.get_rect().y + 100);
+			draw_powerbar(renderer, chidori.v0, sasuke.get_rect().x - 50, sasuke.get_rect().y + 100, chidori.v0_last);
 			
 		}
 		if (sasuke.get_input().left != 1 and sasuke.get_input().right != 1 and bot_time.is_started()) {
@@ -272,7 +285,7 @@ int main(int argv, char* argc[]) {
 		
 		if (naruto.get_input().reload == 1) {
 
-			draw_powerbar(renderer, rasengan.v0, naruto.get_rect().x - 50, naruto.get_rect().y + 100);
+			draw_powerbar(renderer, rasengan.v0, naruto.get_rect().x - 50, naruto.get_rect().y + 100,rasengan.v0_last);
 
 		}
 		if (naruto.get_input().left != 1 and naruto.get_input().right != 1 and your_time.is_started()) {

@@ -274,7 +274,7 @@ void bot_object::reset() {
 
 	smax = 0;
 	ide_num = 0;
-	Rmax = randomxy(100, 300);
-	Lmax = randomxy(100, 300);
+	Rmax = randomxy(130, 300);
+	Lmax = randomxy(130, 300);
 	idemax = randomxy(50, 150);
 }
