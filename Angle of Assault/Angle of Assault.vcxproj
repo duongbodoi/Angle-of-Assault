@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VS SDL\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\include;C:\VS SDL\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\include;C:\VS SDL\SDL2-devel-2.0.22-VC\SDL2-2.0.22\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VS SDL\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\lib\x64;C:\VS SDL\SDL2-devel-2.0.22-VC\SDL2-2.0.22\lib\x64;C:\VS SDL\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\VS SDL\SDL2_mixer-2.6.2\include;C:\VS SDL\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\include;C:\VS SDL\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\include;C:\VS SDL\SDL2-devel-2.0.22-VC\SDL2-2.0.22\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\VS SDL\SDL2_mixer-2.6.2\lib\x64;C:\VS SDL\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\lib\x64;C:\VS SDL\SDL2-devel-2.0.22-VC\SDL2-2.0.22\lib\x64;C:\VS SDL\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,7 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2test.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2test.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,23 +133,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Basetexture.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="Bot_object.cpp" />
     <ClCompile Include="bot_throw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mainfunc.cpp" />
     <ClCompile Include="Mainobject.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="mixer.cpp" />
     <ClCompile Include="object_bar.cpp" />
     <ClCompile Include="ThrowManager.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basetexture.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="Bot_object.h" />
     <ClInclude Include="bot_throw.h" />
     <ClInclude Include="Mainfunc.h" />
     <ClInclude Include="Mainobject.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="mixer.h" />
     <ClInclude Include="object_bar.h" />
     <ClInclude Include="ThrowManager.h" />
     <ClInclude Include="Timer.h" />

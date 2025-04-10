@@ -8,6 +8,7 @@
 #include <sstream>
 #include<cmath>
 #include<random>
+#include<SDL_mixer.h>
 #define PI 3.14159265358979323846
 
 using namespace std;

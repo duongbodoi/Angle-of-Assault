@@ -131,11 +131,11 @@ void throw_move::checkmap(Map& mapdata) {
 	if (x1 >= 0 and x2 < MAX_MAP_X and y1 >= 0 and y2 < MAX_MAP_Y) {
 		if (vel_x > 0) {
 			if (mapdata.tile[y1][x2] != "0" or mapdata.tile[y2][x2] != "0") {
-				x_pos = x2 * 64;
-				x_pos -= width_frame + 1;
 				input_type.shot = 0;
 				//v0 = 0;
 				time = 0;
+				x_pos = x2 * 64;
+				x_pos -= width_frame + 1;
 				set_colider(true);
 			}
 		}
@@ -162,10 +162,10 @@ void throw_move::checkmap(Map& mapdata) {
 	if (x1 >= 0 and x2 < MAX_MAP_X and y1 >= 0 and y2 < MAX_MAP_Y) {
 		if (vel_y > 0) {
 			if (mapdata.tile[y2][x1] != "0" or mapdata.tile[y2][x2] != "0") {
-				y_pos = y2 * 64;
-				y_pos -= heightframe + 1;
 				//v0 = 0;
 				time = 0;
+				y_pos = y2 * 64;
+				y_pos -= heightframe + 1;
 				input_type.shot = 0;
 				set_colider(true);
 

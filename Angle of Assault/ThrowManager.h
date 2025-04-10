@@ -25,6 +25,7 @@ public:
 	double time = 0;
 	double x0=0, y0=0;
 	int v0_last = 0;
+	
 private:
 	double vel_x, vel_y;
 	double x_pos, y_pos;

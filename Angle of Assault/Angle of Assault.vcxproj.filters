@@ -45,6 +45,12 @@
     <ClCompile Include="bot_throw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mixer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mainfunc.h">
@@ -72,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bot_throw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mixer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -238,14 +238,15 @@ void bot_throw::reset(double x,double y) {
 	input_type.angle = 0;
 	input_type.reload = 0;
 	input_type.shot = 0;
-	phi_shot = randomxy(30, 70);
+	phi_shot = randomxy(30, 50);
 	v0_shot = caculate(x, y);
-
 }
 int bot_throw::caculate(double x,double y) {
-	double tanTheta = tan(phi_shot);
-	double cosTheta = cos(phi_shot);
-	double numerator = 2 * cosTheta * cosTheta * (x * tanTheta - y);
-	double denominator = 9.8 * x * x;
-	return sqrt(numerator / denominator);
+	double dx = x0-x;
+	double dy = y0-y;
+	double radian = phi_shot * PI / 180;
+	double tan_theta = tan(radian);
+	double cos_theta = cos(radian);
+	double v0_sq = (9.8 * dx * dx) / (2 * cos_theta * cos_theta * (dy + dx * tan_theta));
+	return sqrt(v0_sq);
 }
