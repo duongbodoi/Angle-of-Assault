@@ -103,7 +103,7 @@ int main(int argv, char* argc[]) {
 	Ltexture background;
 	background.loadfromfile("img/backgr.png", renderer);
 	Ltexture backgroundstart;
-	backgroundstart.loadfromfile("img/start1.jpg", renderer);
+	backgroundstart.loadfromfile("img/start3.jpg", renderer);
 	//
 	bool running = true;
 	SDL_Event e;
