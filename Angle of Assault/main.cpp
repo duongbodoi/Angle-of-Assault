@@ -8,6 +8,7 @@
 #include"Bot_object.h"
 #include"bot_throw.h"
 #include"menu.h"
+#include"mixer.h"
 stringstream text;
 stringstream your_text;
 stringstream bot_text;
@@ -24,6 +25,8 @@ SDL_Rect rasengan_rect;
 SDL_Rect chidori_rect;
 Ltexture you_win;
 Ltexture bot_win;
+//
+
 //
 bool Init() {
 	bool check = true;
@@ -111,13 +114,17 @@ int main(int argv, char* argc[]) {
 	time.start();
 	your_time.start();
 	//
-	Mix_Music* music = Mix_LoadMUS("mixer/bgrmusic.mp3");
+	Mix_Music* music = Mix_LoadMUS("mixer/bgr.mp3");
 	Mix_PlayMusic(music, -1);
 	//
 	button gButton;
 	gButton.load_img("img/button.png", renderer);
 	gButton.set_clip();
-
+	//
+	SoundEffect rasen_sound;
+	rasen_sound.Load("mixer/rasengann.wav");
+	SoundEffect chido_sound;
+	chido_sound.Load("mixer/chido.wav");
 	while (running) {
 		
 		while (SDL_PollEvent(&e) != 0) {
@@ -146,11 +153,13 @@ int main(int argv, char* argc[]) {
 		}
 		if(gButton.get_start())
 		{
+
 			//Time 
 			int real_time = time.get_tick() / 1000;
 			if (your_time.is_started()) {
 				bot_time.stop();
 				chidori.set_colider(false);
+				chido_sound.setcheck(false);
 				if (your_time.get_tick() >= 15 * 1000) {
 					bot_time.start();
 					chidori.reset(naruto.getx_pos(), naruto.gety_pos());
@@ -158,8 +167,10 @@ int main(int argv, char* argc[]) {
 					SDL_Delay(100);
 
 				}
-				if (naruto.get_input().reload == 1) {
+				if (naruto.get_input().reload == 1 and !rasen_sound.IsPlaying() and !rasen_sound.getcheck()) {
 					your_time.paused();
+					rasen_sound.Play();
+					rasen_sound.setcheck(true);
 				}
 				if (rasengan.getcolider())
 				{
@@ -170,6 +181,7 @@ int main(int argv, char* argc[]) {
 				}
 			}
 			if (bot_time.is_started()) {
+				rasen_sound.setcheck(false);
 				your_time.stop();
 				rasengan.set_colider(false);
 				if (bot_time.get_tick() >= 15 * 1000) {
@@ -177,8 +189,10 @@ int main(int argv, char* argc[]) {
 					SDL_Delay(100);
 
 				}
-				if (sasuke.get_input().reload == 1) {
+				if (sasuke.get_input().reload == 1 and !chido_sound.IsPlaying() and !chido_sound.getcheck()) {
 					bot_time.paused();
+					chido_sound.Play();
+					chido_sound.setcheck(true);
 				}
 				if (chidori.getcolider()) {
 					your_time.start();

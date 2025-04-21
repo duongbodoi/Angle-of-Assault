@@ -238,7 +238,8 @@ void bot_throw::reset(double x,double y) {
 	input_type.angle = 0;
 	input_type.reload = 0;
 	input_type.shot = 0;
-	phi_shot = randomxy(30, 50);
+	phi_shot = randomxy(20, 60);
+	cout << phi_shot;
 	v0_shot = caculate(x, y);
 }
 int bot_throw::caculate(double x,double y) {
