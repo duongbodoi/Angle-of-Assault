@@ -111,20 +111,30 @@ int main(int argv, char* argc[]) {
 	bool running = true;
 	SDL_Event e;
 	// Time
-	time.start();
-	your_time.start();
+	
 	//
 	Mix_Music* music = Mix_LoadMUS("mixer/bgr.mp3");
 	Mix_PlayMusic(music, -1);
 	//
 	button gButton;
-	gButton.load_img("img/button.png", renderer);
+	button exit;
+	button x;
+	gButton.load_img("img/play.png", renderer);
 	gButton.set_clip();
+	exit.load_img("img/exiti.png", renderer);
+	exit.set_clip();
+	x.load_img("img/x.png", renderer);
+	x.set_clip();
+	button how;
+	how.load_img("img/play.png", renderer);
+	how.set_clip();
+	Ltexture tuto;
+	tuto.loadfromfile("img/tutorial.png", renderer);
 	//
 	SoundEffect rasen_sound;
 	rasen_sound.Load("mixer/rasengann.wav");
 	SoundEffect chido_sound;
-	chido_sound.Load("mixer/chido.wav");
+	chido_sound.Load("mixer/chidodii.wav");
 	while (running) {
 		
 		while (SDL_PollEvent(&e) != 0) {
@@ -142,18 +152,35 @@ int main(int argv, char* argc[]) {
 				rasengan.Handle_event(e, renderer);
 			}
 			gButton.handleEvent(&e);
-
-				
+			exit.handleEvent(&e);
+			how.handleEvent(&e);
+			x.handleEvent(&e);
 		}
+		if (exit.get_start()) {
+			close();
+		}
+		
 		if (!gButton.get_start()) {
 			backgroundstart.render(renderer,NULL);
-			gButton.set_rect(499,252);
+			gButton.set_rect(479,252);
 			gButton.show(renderer);
-			
+			exit.set_rect(479, 252 + 100);
+			exit.show(renderer);
+			how.set_rect(479, 252 + 100*2);
+			how.show(renderer);
+			if (how.get_start()) {
+				tuto.set_rect(380, 30);
+				tuto.render(renderer);
+				x.set_rect(380 + tuto.get_rect().w, 30);
+				x.show(renderer);
+				if (x.get_start()) how.set_start(false);
+			}
+			else x.set_start(false);
 		}
 		if(gButton.get_start())
 		{
-
+			if (!time.is_started()) time.start();
+			if (!your_time.is_started()) your_time.start();
 			//Time 
 			int real_time = time.get_tick() / 1000;
 			if (your_time.is_started()) {
