@@ -15,7 +15,7 @@ Bạn hãy nhập vai và chiến ngay thôi !!!!
 
 Khi vừa vào game bạn có thể thấy các nút game cơ bản như play,exit,how to play. Hãy chọn "play" để bắt đầu chơi nhé
 
-![Menu chính](readme/main_menu.png)  <!-- Thêm ảnh menu chính -->
+![Menu chính](Angle%20of%20Assault/readme/main_menu.png)  <!-- Thêm ảnh menu chính -->
 
 ---
 
