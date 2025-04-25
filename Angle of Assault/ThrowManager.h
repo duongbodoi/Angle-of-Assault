@@ -25,7 +25,8 @@ public:
 	double time = 0;
 	double x0=0, y0=0;
 	int v0_last = 0;
-	
+	void setpause(bool k) { pause = k; };
+	bool getpause() { return pause; };
 private:
 	double vel_x, vel_y;
 	double x_pos, y_pos;
@@ -37,4 +38,5 @@ private:
 	int map_x_;
 	int map_y_;
 	bool colider;
+	bool pause;
 };

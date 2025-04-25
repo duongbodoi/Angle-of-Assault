@@ -27,6 +27,8 @@ public:
 	int getx_pos() { return x_pos; };
 	int gety_pos() { return y_pos; };
 	int caculate(double x, double y);
+	void setpause(bool k) { pause = k; };
+	bool getpause() { return pause; };
 	int v0 = 0;
 	int phi = 0;
 	double time = 0;
@@ -45,4 +47,5 @@ private:
 	bool colider;
 	int v0_shot;
 	int phi_shot;
+	bool pause;
 };

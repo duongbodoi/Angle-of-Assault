@@ -26,7 +26,8 @@ SDL_Rect chidori_rect;
 Ltexture you_win;
 Ltexture bot_win;
 //
-
+bool pause=false;
+bool end_ = false;
 //
 bool Init() {
 	bool check = true;
@@ -106,7 +107,7 @@ int main(int argv, char* argc[]) {
 	Ltexture background;
 	background.loadfromfile("img/backgr.png", renderer);
 	Ltexture backgroundstart;
-	backgroundstart.loadfromfile("img/start3.jpg", renderer);
+	backgroundstart.loadfromfile("img/start4.png", renderer);
 	//
 	bool running = true;
 	SDL_Event e;
@@ -115,7 +116,13 @@ int main(int argv, char* argc[]) {
 	//
 	Mix_Music* music = Mix_LoadMUS("mixer/bgr.mp3");
 	Mix_PlayMusic(music, -1);
-	//
+	// button
+	Ltexture win;
+	win.loadfromfile("img/win.png", renderer);
+	Ltexture lose;
+	lose.loadfromfile("img/lose.png", renderer);
+	Ltexture pausemenu;
+	pausemenu.loadfromfile("img/pause.png", renderer);
 	button gButton;
 	button exit;
 	button x;
@@ -126,11 +133,17 @@ int main(int argv, char* argc[]) {
 	x.load_img("img/x.png", renderer);
 	x.set_clip();
 	button how;
-	how.load_img("img/play.png", renderer);
+	how.load_img("img/how.png", renderer);
 	how.set_clip();
+	button b_continue;
+	b_continue.load_img("img/continue.png", renderer);
+	b_continue.set_clip();
+	button main_menu;
+	main_menu.load_img("img/main.png", renderer);
+	main_menu.set_clip();
 	Ltexture tuto;
 	tuto.loadfromfile("img/tutorial.png", renderer);
-	//
+	// sound
 	SoundEffect rasen_sound;
 	rasen_sound.Load("mixer/rasengann.wav");
 	SoundEffect chido_sound;
@@ -148,18 +161,60 @@ int main(int argv, char* argc[]) {
 			}
 			if(gButton.get_start())
 			{
-				naruto.Handle_event(e, renderer);
-				rasengan.Handle_event(e, renderer);
+				if(!pause)
+				{
+					naruto.Handle_event(e, renderer);
+					rasengan.Handle_event(e, renderer);
+				}
+
+				if (e.type == SDL_KEYDOWN and e.key.keysym.sym == SDLK_ESCAPE) {
+					pause = true;
+				}
 			}
-			gButton.handleEvent(&e);
-			exit.handleEvent(&e);
-			how.handleEvent(&e);
-			x.handleEvent(&e);
+			if(!gButton.get_start())
+			{
+				gButton.handleEvent(&e);
+				exit.handleEvent(&e);
+				how.handleEvent(&e);
+				x.handleEvent(&e);
+			}
+			if (pause) {
+				if(end_) exit.handleEvent(&e);
+				else b_continue.handleEvent(&e);
+				main_menu.handleEvent(&e);
+			}
 		}
 		if (exit.get_start()) {
 			close();
 		}
-		
+		if (main_menu.get_start()) {
+			pause = false;
+			gButton.set_start(false);
+			end_ = false;
+			naruto.hp = 100;
+			sasuke.hp = 100;
+		}
+		if (b_continue.get_start()) {
+			pause = false;
+			time.unpaused();
+			bot_time.unpaused();
+			your_time.unpaused();
+		}
+		if (!pause) {
+			main_menu.set_start(false);
+			b_continue.set_start(false);
+			sasuke.setpause(false);
+			chidori.setpause(false);
+			rasengan.setpause(false);
+		}
+		if (pause) {
+			time.paused();
+			your_time.paused();
+			bot_time.paused();
+			sasuke.setpause(true);
+			chidori.setpause(true);
+			rasengan.setpause(true);
+		}
 		if (!gButton.get_start()) {
 			backgroundstart.render(renderer,NULL);
 			gButton.set_rect(479,252);
@@ -179,8 +234,9 @@ int main(int argv, char* argc[]) {
 		}
 		if(gButton.get_start())
 		{
+			
 			if (!time.is_started()) time.start();
-			if (!your_time.is_started()) your_time.start();
+			if (!your_time.is_started() and !bot_time.is_started()) your_time.start();
 			//Time 
 			int real_time = time.get_tick() / 1000;
 			if (your_time.is_started()) {
@@ -192,7 +248,7 @@ int main(int argv, char* argc[]) {
 					chidori.reset(naruto.getx_pos(), naruto.gety_pos());
 					sasuke.reset();
 					SDL_Delay(100);
-
+					
 				}
 				if (naruto.get_input().reload == 1 and !rasen_sound.IsPlaying() and !rasen_sound.getcheck()) {
 					your_time.paused();
@@ -326,13 +382,17 @@ int main(int argv, char* argc[]) {
 				}
 			}
 			//end game
-			if (sasuke.hp < 0)
+			if (sasuke.hp <= 0)
 			{
+				end_ = true;
 				sasuke.hp = 0;
+				
 				you_win.render(renderer);
+				
 			}
 			if (naruto.hp <= 0)
 			{
+				end_ = true;
 				naruto.hp = 0;
 				bot_win.render(renderer);
 			}
@@ -372,7 +432,7 @@ int main(int argv, char* argc[]) {
 			text << "Time : " << real_time << " s";
 
 			time_text.loadfromtext(renderer, text.str(), color, "font.ttf");
-			time_text.set_rect(1060, 15);
+			time_text.set_rect(1000, 15);
 			time_text.render(renderer);
 
 			if (your_time.is_started())
@@ -382,7 +442,7 @@ int main(int argv, char* argc[]) {
 				your_text << "Your turn: " << 15 - your_time.get_tick() / 1000 << " s";
 
 				your_turn.loadfromtext(renderer, your_text.str(), color, "font.ttf");
-				your_turn.set_rect(500, 20);
+				your_turn.set_rect(520, 20);
 				your_turn.render(renderer);
 			}
 			if (bot_time.is_started())
@@ -392,12 +452,37 @@ int main(int argv, char* argc[]) {
 				bot_text << "Bot turn: " << 15 - bot_time.get_tick() / 1000 << " s";
 
 				bot_turn.loadfromtext(renderer, bot_text.str(), color, "font.ttf");
-				bot_turn.set_rect(500, 20);
+				bot_turn.set_rect(520, 20);
 				bot_turn.render(renderer);
 			}
 		}
 		//
-		
+		if (pause) {
+			pausemenu.set_rect(290, 14);
+			pausemenu.render(renderer);
+			main_menu.set_rect(480, 190 + 80);
+			main_menu.show(renderer);
+			if(!end_)
+			{
+				b_continue.set_rect(480, 100 + 80 * 3 + 30);
+				b_continue.show(renderer);
+			}
+			else {
+				exit.set_rect(480, 100 + 80 * 3 + 30);
+				exit.show(renderer);
+				win.set_rect(500, 14);
+				lose.set_rect(500, 14);
+				if (naruto.hp == 0) {
+					lose.render(renderer);
+				}
+				else win.render(renderer);
+			}
+			
+		}
+		//
+		if (end_) {
+			pause = true;
+		}
 		SDL_RenderPresent(renderer);
 		
 		time_text.free();

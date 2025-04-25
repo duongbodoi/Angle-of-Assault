@@ -18,10 +18,12 @@ bot_object::bot_object() {
 	Rmax = 0;
 	Lmax = 0;
 	idemax = 0;
+	pause = false;
 }
 bot_object::~bot_object() {
 
 }
+
 bool bot_object::load_img(std::string file, SDL_Renderer* renderer) {
 	bool ret = Ltexture::loadfromfile(file, renderer);
 	if (ret == true) {
@@ -98,6 +100,7 @@ void bot_object::show(SDL_Renderer* des) {
 	// Xử lý animation
 	if (input_type.shot == 1) {
 		frame += 2;
+		if (pause) frame -= 2;
 		if (frame / 16 >= 5) {
 			frame = 15; 
 			input_type.shot = 0;  
@@ -109,6 +112,7 @@ void bot_object::show(SDL_Renderer* des) {
 	}
 	else if (input_type.left == 1 || input_type.right == 1) {
 		frame += 1;
+		if (pause) frame -= 1;
 		if (frame / 16 >= 7) { 
 			frame = 0;
 		}
@@ -130,9 +134,18 @@ void bot_object::show(SDL_Renderer* des) {
 void bot_object::move(Map& mapdata,bool turn) {
 	vel_x = 0;
 	vel_y += 2;
+	if (pause) vel_y -= 2;
 	if (vel_y >= 10) vel_y = 10;
-	if (input_type.left == 1) vel_x -= v;
-	else if (input_type.right == 1) vel_x += v;
+	if (input_type.left == 1) 
+	{
+		vel_x -= v;
+		if (pause) vel_x += v;
+	}
+	else if (input_type.right == 1) 
+	{
+		vel_x += v;
+		if (pause) vel_x -= v;
+	}
 	if (input_type.jumb == 1)
 	{
 		vel_y = -30;
@@ -211,6 +224,7 @@ void bot_object::checkmap(Map& mapdata) {
 void bot_object::ai_control() {
 	if (input_type.right == 1) {
 		ide_num++;
+		if (pause) ide_num--;
 		status = walk_r;
 		if (smax > Rmax) {
 			smax = 0;
@@ -226,6 +240,7 @@ void bot_object::ai_control() {
 	if (input_type.left == 1) {
 		status = walk_l;
 		ide_num++;
+		if (pause) ide_num--;
 		if (smax < -Lmax) {
 			smax = 0;
 			input_type.left = 0;

@@ -29,7 +29,10 @@ public:
 	const int v = 4;
 	const int HPmax = 100;
 	int hp = 100;
+	void setpause(bool k) { pause = k; };
+	bool getpause(){ return pause; };
 private:
+	bool pause;
 	double vel_x, vel_y;
 	double x_pos, y_pos;
 	int width_frame;

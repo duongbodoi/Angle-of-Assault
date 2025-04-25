@@ -8,7 +8,7 @@ bot_throw::bot_throw() {
 	input_type.shot = 0;
 	map_x_ = 0;
 	map_y_ = 0;
-	
+	pause = false;
 }
 bot_throw::~bot_throw() {
 
@@ -20,13 +20,16 @@ void bot_throw::arrow_shot(double x, double y, Map& mapdata) {
 	if (input_type.angle == 1) {
 		if (input_type.aim_down == 1) {
 			phi--;
+			if (pause) phi--;
 		}
 		if (input_type.aim_up == 1) {
 			phi++;
+			if (pause) phi++;
 		}
 	}
 	if (input_type.reload == 1) {
 		v0 += 1;
+		if (pause) v0 -= 1;
 		if (v0 >= 200) v0 = 200;
 		time = 0;
 		x_pos = x0;
@@ -37,6 +40,7 @@ void bot_throw::arrow_shot(double x, double y, Map& mapdata) {
 	}
 	if (input_type.shot == 1) {
 		time += 0.1;
+		if (pause) time -= 0.1;
 		vel_x = v0 * cos(radian) * time;
 		vel_y = v0 * sin(radian) - 9.8 * time;
 		x_pos = x0 - v0 * cos(radian) * time;;

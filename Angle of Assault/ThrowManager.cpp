@@ -84,6 +84,7 @@ void throw_move::arrow_shot(double x,double y, Map& mapdata) {
 	double radian = phi * PI / 180;
 	if (input_type.reload == 1 && !colider) {
 		v0 += 2;
+		if (pause) v0 -= 2;
 		if (v0 >= 200) v0 = 200;
 		time = 0;
 		x_pos = x0;
@@ -94,6 +95,7 @@ void throw_move::arrow_shot(double x,double y, Map& mapdata) {
 	}
 	if (input_type.shot == 1) {
 		time += 0.1;
+		if (pause) time -= 0.1;
 		vel_x = v0 * cos(radian) * time;
 		vel_y = v0 * sin(radian) - 9.8 * time;
 		x_pos = x0 + v0 * cos(radian) * time;;
