@@ -11,6 +11,13 @@ Bạn hãy nhập vai và chiến ngay thôi !!!!
 
 ---
 
+## 📑 Mục lục
+1. [👋 Giới thiệu game](#-giới-thiệu-game)  
+2. [🎮 Bắt đầu game](#-bắt-đầu-game)  
+3. [🧩 Các thành phần trong game](#-các-thành-phần-trong-game)  
+4. [🎮 Cách chơi](#-cách-chơi)  
+5. [🏆 Chiến thắng và thất bại](#-chiến-thắng-và-thất-bại)
+
 ## 🎮 Bắt đầu game
 
 Khi vừa vào game bạn có thể thấy các nút game cơ bản như play,exit,how to play. Hãy chọn "play" để bắt đầu chơi nhé
