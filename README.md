@@ -22,40 +22,40 @@ Khi vừa vào game bạn có thể thấy các nút game cơ bản như play,ex
 ## 🧩 Các thành phần trong game
 
 Nhân vật Naruto
-![bạn](assets/main_character.png)  
+![bạn](Angle%20of%20Assault/readme/naruto.png)  
 
 Nhân vật Sasuke
-![máy](assets/main_character.png)  
+![máy](Angle%20of%20Assault/readme/sasuke.png)  
 
 Chiêu thức của bạn
-![rasengan](assets/main_character.png)
+![rasengan](Angle%20of%20Assault/readme/rasengan.png)
 
 Chiêu thức của địch
-![chidori](assets/main_character.png)
+![chidori](Angle%20of%20Assault/readme/chidori.png)
 
 Nửa bên này của thung lũng tận cùng
-![phần sân bên bạn](assets/main_character.png)  
+![phần sân bên bạn](Angle%20of%20Assault/readme/you.png)  
 
 Nửa bên kia của thung lũng tận cùng
-![phần sân bên địch](assets/main_character.png)  
+![phần sân bên địch](Angle%20of%20Assault/readme/bot.png)  
 
 Thanh máu
-![HP](assets/main_character.png)
+![HP](Angle%20of%20Assault/readme/hp.png)
 
 Thanh lực
-![power](assets/main_character.png)
+![power](Angle%20of%20Assault/readme/power.png)
 
 Thước ngắm
-![angle](assets/main_character.png)
+![angle](Angle%20of%20Assault/readme/angle.png)
 
 Thời gian
-![time](assets/main_character.png)
+![time](Angle%20of%20Assault/readme/time.png)
 
 Đếm ngược thời gian hết lượt
-![turn](assets/main_character.png)
+![turn](Angle%20of%20Assault/readme/turn.png)
 
 Menu_pause game
-![pause](assets/main_character.png)
+![pause](Angle%20of%20Assault/readme/pause.png)
 
 
 ## 🎮 Cách chơi
@@ -63,22 +63,22 @@ Menu_pause game
 Bạn có thể dùng nút mũi tên trái phải để di chuyển sang 2 bên, nút "z" để nhảy
 nút mũi tên lên xuống để căn chỉnh góc bắn.
 Giữ nút space để căn lực, nhả ra để bắn.
-![Điều khiển nhân vật](assets/controls.png)  <!-- Thêm ảnh điều khiển nhân vật -->
-![Điều khiển nhân vật](assets/controls.png)  <!-- Thêm ảnh điều khiển nhân vật -->
+![Điều khiển nhân vật](Angle%20of%20Assault/readme/how.png)  <!-- Thêm ảnh điều khiển nhân vật -->
+
 
 Lưu ý:
 Tận dụng thanh lực đã căn ở lượt trước để tính toán căn lực lượt sau cho hợp lí
-![Điều khiển nhân vật](assets/controls.png)  <!-- Thêm ảnh điều khiển nhân vật -->
+![Mẹo](Angle%20of%20Assault/readme/.png)  <!-- Thêm ảnh điều khiển nhân vật -->
 
 Để ý thời gian kẻo hết lượt
-![Điều khiển nhân vật](assets/controls.png)  <!-- Thêm ảnh điều khiển nhân vật -->
+
 
 ---
 
 ## 🏆 Chiến thắng và thất bại
 
 Khi máu của bạn hết đồng nghĩa với việc bạn đã thua, ngươc lại nếu địch hết máu trước bạn đã giành chiến thắng
-![Chiến thắng](assets/victory.png)  <!-- Thêm ảnh chiến thắng -->
-![Thất bại](assets/game_over.png)  <!-- Thêm ảnh thất bại -->
+![Chiến thắng](Angle%20of%20Assault/readme/win.png)  <!-- Thêm ảnh chiến thắng -->
+![Thất bại](Angle%20of%20Assault/readme/lose.png)  <!-- Thêm ảnh thất bại -->
 
 
