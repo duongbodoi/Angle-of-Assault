@@ -75,7 +75,7 @@ Giữ nút space để căn lực, nhả ra để bắn.
 
 Lưu ý:
 Tận dụng thanh lực đã căn ở lượt trước để tính toán căn lực lượt sau cho hợp lí
-![Mẹo](Angle%20of%20Assault/readme/.png)  <!-- Thêm ảnh điều khiển nhân vật -->
+![Mẹo](Angle%20of%20Assault/readme/note.png)  <!-- Thêm ảnh điều khiển nhân vật -->
 
 Để ý thời gian kẻo hết lượt
 
