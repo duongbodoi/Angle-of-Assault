@@ -8,6 +8,7 @@ Naruto. Đây là trận quyết chiến của 2 nhân vật dó là Naruto và 
 thi triển chiêu thức rasengan và tấn công(ném) Sasuke nào. Nhưng nhớ rằng Sasuke bên kia đang đợi để thi triển chidori lên bạn đó (hãy cẩn thân !).
 Bạn hãy nhập vai và chiến ngay thôi !!!!
 
+[Link giới thiệu game](https://youtu.be/WWxsDBzhwII)
 
 ---
 
